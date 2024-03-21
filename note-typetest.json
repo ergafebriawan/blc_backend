@@ -1,0 +1,98 @@
+[
+    {
+        "type": "blank",
+        "test": "listening",
+        "title": "LISTENING",
+        "subtitle": "COMPREHENSION",
+        "content": "",
+        "timer": "60",
+        "audio": "DENGTONG.mp3"
+    },
+    {
+        "type": "card",
+        "test": "listening",
+        "page-title": "LISTENING",
+        "page-subtitle": "",
+        "title": "PART A",
+        "subtitle": "DIRECTIONS",
+        "content": "A In Part ABX, you will hear short conversations between two people. After each conversation, you will hear a question about the conversation. The conversations and questions will not be repeated. <br><br>After you hear a question, read the four possible answers and choose the best answer. ",
+        "timer": "60",
+        "audio": ""
+    },
+    {
+        "type": "example",
+        "test": "listening",
+        "page-title": "LISTENING",
+        "page-subtitle": "EXAMPLE",
+        "title": "",
+        "subtitle": "You learn from the conversation that neither the man nor the woman likes the painting. The best answer to the question \u201cWhat does the man mean?\u201d is (A), \u201cHe doesn\u2019t like the painting either.\u201d Therefore, the correct choice is (A).",
+        "no": "0",
+        "a": "He does not like the painting either.",
+        "b": "He does not know how to paint.",
+        "c": "He does not have any paintings.",
+        "d": "He does not know what to do.",
+        "key": "a",
+        "timer": "60",
+        "audio": "listening-parta-example"
+    },
+    {
+        "type": "test",
+        "test": "listening",
+        "page-title": "LISTENING",
+        "page-subtitle": "PART A",
+        "title": "",
+        "a": "She lost the man\u2019s calculator. edit",
+        "b": "She will lend the man her calculator.",
+        "c": "The calculator may be under the man\u2019s book.",
+        "d": "The man will not have time to find the calculator.",
+        "key": "c",
+        "timer": "27",
+        "no": "1",
+        "audio": "DENGTONG.mp3",
+        "subtitle": ""
+    },
+    {
+        "type": "question",
+        "test": "listening",
+        "page-title": "LISTENING",
+        "page-subtitle": "PART B",
+        "title": "QUESTION 31 - 34",
+        "subtitle": "",
+        "timer": "60",
+        "audio": "listening-31-34"
+    },
+    {
+        "type": "test1",
+        "test": "structure",
+        "page-title": "WRITTEN",
+        "page-subtitle": "EXAMPLE",
+        "title": "Guppies are sometimes calls rainbow fish because of the males bright colors.",
+        "subtitle": "The sentence should read, \"Guppies are sometimes called rainbow fish because of the males bright colors.\" Therefore, you should choose (A).",
+        "no": "0",
+        "a": "calls",
+        "b": "fish",
+        "c": "because of",
+        "d": "bright",
+        "key": "a",
+        "timer": "60",
+        "audio": ""
+    },
+    {
+        "type": "paragraph",
+        "test": "reading",
+        "page-title": "READING",
+        "page-subtitle": "COMPREHENSION",
+        "title": "The phrase \u201cthis trend\u201d in line 14 refers to",
+        "subtitle": "",
+        "file-title": "Questions 1-10",
+        "file": "r-1-10.txt",
+        "a": "Industrial workers becoming farmers",
+        "b": "The economic development of the countryside",
+        "c": "The loss of rural population",
+        "d": "Innovations in manufacturing",
+        "key": "c",
+        "no": "7",
+        "timer": "30"
+    }
+
+]

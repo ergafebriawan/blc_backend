@@ -1,0 +1,994 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "BLC Backend",
+        "version": "2.0",
+        "description": "backend service app BLC",
+        "termsOfService": "https://blc.com/terms/",
+        "contact": {
+            "name": "Fusionx Project",
+            "url": "https://www.fusionxproject.com/support",
+            "email": "ergafebriawan@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://development.api.blc.test/v1",
+            "description": "Development server"
+        },
+        {
+            "url": "https://api.blc.test/v1",
+            "description": "Production server"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "auth",
+                    "user"
+                ],
+                "summary": "login user",
+                "description": "Login for User Test",
+                "responses": {
+                    "200": {
+                        "description": "success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/userLogin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success login user test with user register and password is true",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "login successfuly",
+                                                "data": {
+                                                    "num_reg": "2983643249233",
+                                                    "token": "kfh8w4ylfw83hwofobkvbkwrubdbks38fkbvsd"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed login user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "wrong number user or password",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "auth",
+                    "user"
+                ],
+                "summary": "user logout",
+                "description": "user test is logged out",
+                "responses": {
+                    "200": {
+                        "description": "success response logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/userLogin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success logout user",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "logout successfuly",
+                                                "data": null
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed logout user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "something wrong to logout",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login-admin": {
+            "post": {
+                "tags": [
+                    "admin",
+                    "admin"
+                ],
+                "summary": "login admin",
+                "description": "login for admin BLC",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/userLogin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success login admin with useradmin and password is true",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "login successfuly",
+                                                "data": {
+                                                    "username": "admin",
+                                                    "token": "kfh8w4ylfw83hwofobkvbkwrubdbks38fkbvsd"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed login user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "wrong number user or password",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout-admin": {
+            "post": {
+                "tags": [
+                    "auth",
+                    "admin"
+                ],
+                "summary": "admin logout",
+                "description": "user test is logged out",
+                "responses": {
+                    "200": {
+                        "description": "success response logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/userLogin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success logout user",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "logout successfuly",
+                                                "data": null
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed logout user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "something wrong to logout",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "get all data admin",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/dataAdmin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success get all data admin",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "get all data user admin",
+                                                "data": [
+                                                    {
+                                                        "id_admin": "ADM-001",
+                                                        "username": "admin1",
+                                                        "name_admin": "admin_1",
+                                                        "token": "vbi4go3482fbwebvjkbdviw49hsvkbvkw4skjbvds",
+                                                        "created_at": "1970-01-01 00:00:00",
+                                                        "updated_at": "1970-01-01 00:00:00"
+                                                    },
+                                                    {
+                                                        "id_admin": "ADM-002",
+                                                        "username": "admin2",
+                                                        "name_admin": "admin_2",
+                                                        "token": "vbi4gdsinlsvfwebvjkbdviw49hsvkbvkw4skjbvds",
+                                                        "created_at": "1970-01-01 00:00:00",
+                                                        "updated_at": "1970-01-01 00:00:00"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed load data user admin",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed load data admin",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "add user for admin",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/createOrUpdateAdmin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success add new admin",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "success add new admin",
+                                                "data": {
+                                                    "id_admin": "ADM-001",
+                                                    "username": "admin1",
+                                                    "name_admin": "admin_1",
+                                                    "password": "ukrkbvkerbvire3453454n3b534",
+                                                    "token": "vbi4go3482fbwebvjkbdviw49hsvkbvkw4skjbvds",
+                                                    "created_at": "1970-01-01 00:00:00",
+                                                    "updated_at": "1970-01-01 00:00:00"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed add new admin",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed add new admin",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/{id}": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "get detail data for user admin",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/dataAdmin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success get detail data admin",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "get detail data user admin",
+                                                "data": {
+                                                    "id_admin": "ADM-001",
+                                                    "username": "admin1",
+                                                    "name_admin": "admin_1",
+                                                    "password": "hvbir345930453045",
+                                                    "token": "vbi4go3482fbwebvjkbdviw49hsvkbvkw4skjbvds",
+                                                    "created_at": "1970-01-01 00:00:00",
+                                                    "updated_at": "1970-01-01 00:00:00"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed load data user admin",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed load data admin",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "update data for user admin",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/createOrUpdateAdmin"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success update data admin",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "success update data user admin",
+                                                "data": {
+                                                    "id_admin": "ADM-001",
+                                                    "username": "admin1",
+                                                    "name_admin": "admin_1",
+                                                    "token": "vbi4go3482fbwebvjkbdviw49hsvkbvkw4skjbvds",
+                                                    "created_at": "1970-01-01 00:00:00",
+                                                    "updated_at": "1970-01-01 00:00:00"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed update data user admin",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed update data admin",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "admin"
+                ],
+                "description": "delete for user admin",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/deleteData"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success delete data admin",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "success delete data user admin id ADM-001"
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed delete data user admin",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed delete data admin"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/peserta": {
+            "get": {
+                "tags": [
+                    "peserta"
+                ],
+                "description": "get semua data peserta",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/dataUser"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success get all data user",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "get all data user",
+                                                "data": [
+                                                    {
+                                                        "id_admin": "USR-001",
+                                                        "no_reg": "234237293432",
+                                                        "role_kelas": "regular",
+                                                        "jenis_peserta": "koordinator",
+                                                        "nama": "erga febriawan",
+                                                        "email": "ergafebriawan@gmail",
+                                                        "no_hp": "085856918678",
+                                                        "gender": "laki-laki",
+                                                        "tgl_lahir": "09-02-1998",
+                                                        "instansi": "Fakultas Kesehatan",
+                                                        "alamat": "Blitar",
+                                                        "profile_picture": {
+                                                            "nama_file": "profile-234237293432.jpg",
+                                                            "path": "/storage/profile/profile-234237293432.jpg"
+                                                        },
+                                                        "token": "vbi4go3482fbwebvjkbdviw49hsvkbvkw4skjbvds",
+                                                        "created_at": "1970-01-01 00:00:00",
+                                                        "updated_at": "1970-01-01 00:00:00"
+                                                    },
+                                                    {
+                                                        "id_admin": "USR-002",
+                                                        "no_reg": "2342372435432",
+                                                        "role_kelas": "regular",
+                                                        "jenis_peserta": "anggota",
+                                                        "nama": "mustafi",
+                                                        "email": "mustafi@gmail",
+                                                        "no_hp": "085856918678",
+                                                        "gender": "laki-laki",
+                                                        "tgl_lahir": "09-02-1998",
+                                                        "instansi": "Fakultas Teknik",
+                                                        "alamat": "Malang",
+                                                        "profile_picture": {
+                                                            "nama_file": "profile-2342372435432.jpg",
+                                                            "path": "/storage/profile/profile-2342372435432.jpg"
+                                                        },
+                                                        "token": "vbi4go3482fbwebvjkbdviw49hsvkbvkw4skjbvds",
+                                                        "created_at": "1970-01-01 00:00:00",
+                                                        "updated_at": "1970-01-01 00:00:00"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed load data user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed load data",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "peserta"
+                ],
+                "description": "menambahkan peserta baru",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/dataUser"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success add new user",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "success add new user",
+                                                "data": {
+                                                    "id_admin": "USR-001",
+                                                    "no_reg": "234237293432",
+                                                    "role_kelas": "regular",
+                                                    "jenis_peserta": "koordinator",
+                                                    "nama": "erga febriawan",
+                                                    "email": "ergafebriawan@gmail",
+                                                    "no_hp": "085856918678",
+                                                    "gender": "laki-laki",
+                                                    "tgl_lahir": "09-02-1998",
+                                                    "instansi": "Fakultas Kesehatan",
+                                                    "alamat": "Blitar",
+                                                    "profile_picture": {
+                                                        "nama_file": "profile-234237293432.jpg",
+                                                        "path": "/storage/profile/profile-234237293432.jpg"
+                                                    },
+                                                    "token": null,
+                                                    "created_at": "1970-01-01 00:00:00",
+                                                    "updated_at": "1970-01-01 00:00:00"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed add new user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed add new user",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/peserta/{id}": {
+            "get": {
+                "tags": [
+                    "peserta"
+                ],
+                "description": "get detail data peserta",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/dataUser"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "detail data user",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "detail data user",
+                                                "data": {
+                                                    "id_admin": "USR-001",
+                                                    "no_reg": "234237293432",
+                                                    "role_kelas": "regular",
+                                                    "jenis_peserta": "koordinator",
+                                                    "nama": "erga febriawan",
+                                                    "email": "ergafebriawan@gmail",
+                                                    "no_hp": "085856918678",
+                                                    "gender": "laki-laki",
+                                                    "tgl_lahir": "09-02-1998",
+                                                    "instansi": "Fakultas Kesehatan",
+                                                    "alamat": "Blitar",
+                                                    "profile_picture": {
+                                                        "nama_file": "profile-234237293432.jpg",
+                                                        "path": "/storage/profile/profile-234237293432.jpg"
+                                                    },
+                                                    "token": null,
+                                                    "created_at": "1970-01-01 00:00:00",
+                                                    "updated_at": "1970-01-01 00:00:00"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed add new user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed add new user",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "description": "update data peserta",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/dataUser"
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "success add new user",
+                                        "value": [
+                                            {
+                                                "success": true,
+                                                "message": "success add new user",
+                                                "data": {
+                                                    "id_admin": "USR-001",
+                                                    "no_reg": "234237293432",
+                                                    "role_kelas": "regular",
+                                                    "jenis_peserta": "koordinator",
+                                                    "nama": "erga febriawan",
+                                                    "email": "ergafebriawan@gmail",
+                                                    "no_hp": "085856918678",
+                                                    "gender": "laki-laki",
+                                                    "tgl_lahir": "09-02-1998",
+                                                    "instansi": "Fakultas Kesehatan",
+                                                    "alamat": "Blitar",
+                                                    "profile_picture": {
+                                                        "nama_file": "profile-234237293432.jpg",
+                                                        "path": "/storage/profile/profile-234237293432.jpg"
+                                                    },
+                                                    "token": null,
+                                                    "created_at": "1970-01-01 00:00:00",
+                                                    "updated_at": "1970-01-01 00:00:00"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "failed": {
+                                        "description": "failed add new user",
+                                        "value": [
+                                            {
+                                                "success": false,
+                                                "message": "failed add new user",
+                                                "data": null
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "hapus data peserta",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/peserta/filter/{params}": {
+            "get": {
+                "description": "menampilkan daftar peserta berdasarkan filter",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/peserta/active/{id-peserta}": {
+            "put": {
+                "description": "aktivasi peserta ke test yang dipilih",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/peserta/by-test/{id-test}": {
+            "get": {
+                "description": "menampilkan data perserta yang ikut test",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "ProjectAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-API-Key"
+            }
+        },
+        "parameters": {},
+        "schemas": {
+            "userLogin": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "default": null,
+                        "properties": {
+                            "num_reg": {
+                                "type": "string"
+                            },
+                            "token": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "dataAdmin": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "default": null,
+                        "properties": {
+                            "id_admin": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "name_admin": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "token": {
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "createOrUpdateAdmin": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "object",
+                        "default": null,
+                        "properties": {
+                            "id_admin": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "name_admin": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "token": {
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "deleteData": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "dataUser": {
+                "type": "object",
+                "properties": {
+                    "id_user": {
+                        "type": "string"
+                    },
+                    "no_reg": {
+                        "type": "string"
+                    },
+                    "role_kelas": {
+                        "type": "string"
+                    },
+                    "jenis_peserta": {
+                        "type": "string"
+                    },
+                    "nama": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "no_hp": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "tgl_lahir": {
+                        "type": "string"
+                    },
+                    "instansi": {
+                        "type": "string"
+                    },
+                    "alamat": {
+                        "type": "string",
+                        "default": null
+                    },
+                    "profile_picture": {
+                        "type": "object",
+                        "default": null,
+                        "properties": {
+                            "nama_file": {
+                                "type": "string"
+                            },
+                            "path": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "token": {
+                        "type": "string",
+                        "default": null
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
