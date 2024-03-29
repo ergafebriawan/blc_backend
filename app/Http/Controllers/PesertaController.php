@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peserta;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PesertaController extends Controller
 {
@@ -21,21 +22,31 @@ class PesertaController extends Controller
     public function index(): JsonResponse{
         $peserta = Peserta::all();
         if(count($peserta) > 0){
-            $res = $this->responses(true, 'get semua data peserta', $peserta);
+            return response()->json(
+                $this->responses(true, 'get semua data peserta', $peserta), 
+                Response::HTTP_OK
+            );
         }else{
-            $res = $this->responses(false, 'data empty');
+            return response()->json(
+                $this->responses(false, 'data empty'), 
+                Response::HTTP_NO_CONTENT
+            );
         }
-        return response()->json($res);
     }
 
     public function detail($id):JsonResponse{
         $detail_peserta = Peserta::where('_id', $id)->get();
         if(count($detail_peserta) > 0){
-            $res = $this->responses(true, 'get detail data peserta id = '.$id, $detail_peserta[0]);
+            return response()->json(
+                $this->responses(true, 'get detail data peserta id = '.$id, $detail_peserta[0]), 
+                Response::HTTP_OK
+            );
         }else{
-            $res = $this->responses(false, 'data peserta id('.$id.') not found');
+            return response()->json(
+                $this->responses(false, 'data peserta id('.$id.') not found'), 
+                Response::HTTP_NO_CONTENT
+            );
         }
-        return response()->json($res);
     }
 
     public function create(Request $request): JsonResponse{
@@ -59,11 +70,16 @@ class PesertaController extends Controller
         $data_valid = Peserta::where('no_reg', $request->input("no_reg"))->get();
         if(count($data_valid) == 0){
             Peserta::create($data);
-            $res = $this->responses(true, 'berhasil menambahkan peserta', $data);
+            return response()->json(
+                $this->responses(true, 'berhasil menambahkan peserta', $data), 
+                Response::HTTP_CREATED
+            );
         }else{
-            $res = $this->responses(false, 'peserta sebelumnya sudah terdaftar');
+            return response()->json(
+                $this->responses(false, 'peserta sebelumnya sudah terdaftar'), 
+                Response::HTTP_CONFLICT
+            );
         }
-        return response()->json($res);
     }
 
     public function update(Request $request, $id): JsonResponse{
@@ -83,11 +99,16 @@ class PesertaController extends Controller
 
         $peserta_update = Peserta::where("_id", $id)->update($data);
         if($peserta_update){
-            $res = $this->responses(true, 'berhasil update data id:'.$id, $data);
+            return response()->json(
+                $this->responses(true, 'berhasil update data id:'.$id, $data), 
+                Response::HTTP_OK
+            );
         }else{
-            $res = $this->responses(false, 'gagal update data');
+            return response()->json(
+                $this->responses(false, 'gagal update data'), 
+                Response::HTTP_NOT_MODIFIED
+            );
         }
-        return response()->json($res);
     }
 
     public function delete($id): JsonResponse{

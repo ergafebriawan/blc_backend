@@ -7,6 +7,8 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\SoalController;
 use App\Http\Controllers\OptionController;
+use FastRoute\Route;
+use Laravel\Lumen\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +54,12 @@ $router->get('/test/{id}', 'TestController@detail');
 $router->get('/test/update/{id}', 'TestController@update');
 
 //auth admin
-$router->post('/login/admin', 'AuthController@login_admin');
-$router->get('/logout/admin/{id_admin}', 'AuthController@logout_admin');
+$router->group([
+    'prefix' => 'api'
+], function ($router) { 
+    $router->post('/login/admin', 'AuthController@login');
+    $router->get('/logout/admin/{id_admin}', 'AuthController@logout_admin');
+});
 
 //auth peserta
 
