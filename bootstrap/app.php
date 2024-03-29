@@ -27,6 +27,12 @@ $app->withFacades();
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->withEloquent();
 
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+$app->configure('cors');
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
