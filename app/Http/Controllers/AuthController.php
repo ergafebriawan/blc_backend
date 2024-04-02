@@ -17,31 +17,36 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout']]);
     }
 
-    public function login_peserta(Request $request): JsonResponse{
+    public function login_peserta(Request $request)
+    {
         return response()->json();
     }
 
-    public function login(Request $request){
-        $this->validate($request,[
-            "username" => 'required|string',
-            "password" => 'required|string' 
+    public function login(Request $request): JsonResponse
+    {
+        $this->validate($request, [
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
-        $credentials = $request->only(['username', 'password']);
-        // return response()->json($credentials);
 
-        if(! $token = Auth::attempt($credentials)){
+        $credentials = $request->only(['username', 'password']);
+
+        if (!$token = Auth::attempt($credentials)) {
             return response()->json(
-                $this->responses(false, 'Unauthorized'), 
+                $this->responses(false, 'password salah'),
                 Response::HTTP_UNAUTHORIZED
             );
         }
-        $res = [
+
+        $d = [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'admin' => auth()->user()
+            'admin' => auth()->user(),
+            'expires_in' => auth()->factory()->getTTL() * 60 * 24
         ];
+
         return response()->json(
-            $this->responses(true, 'login berhasil', $res),
+            $this->responses(true, 'login berhasil', $d),
             Response::HTTP_OK
         );
 
@@ -80,37 +85,49 @@ class AuthController extends Controller
 
     }
 
-    // public function refresh(){
-    //     $res = [
-    //         'access_token' => auth()->refresh(),
-    //         'token_type' => 'bearer',
-    //         'admin' => auth()->user()
-    //     ];
-    //     return response()->json(
-    //         $this->responses(true, 'login berhasil', $res),
-    //         Response::HTTP_OK
-    //     );
-    // }
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
 
-    public function logout_admin(Request $request, $id_admin): JsonResponse{
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    public function logout_admin(Request $request, $id_admin): JsonResponse
+    {
         $logout_admin = Admin::where('_id', $id_admin)->update([
             "token" => null
         ]);
-        
-        if($logout_admin){
+
+        if ($logout_admin) {
             return response()->json(
-                $this->responses(true, 'berhasil logout'), 
+                $this->responses(true, 'berhasil logout'),
                 Response::HTTP_OK
             );
-        }else{
+        } else {
             return response()->json(
-                $this->responses(false, 'gagal logout'), 
+                $this->responses(false, 'gagal logout'),
                 Response::HTTP_UNAUTHORIZED
             );
         }
     }
 
-    protected function responses($success, $message, $data = null){
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'admin' => auth()->user(),
+            'expires_in' => auth()->factory()->getTTL() * 60 * 24
+        ]);
+    }
+
+    protected function responses($success, $message, $data = null)
+    {
         return [
             "success" => $success,
             "message" => $message,

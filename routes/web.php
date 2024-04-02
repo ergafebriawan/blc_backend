@@ -55,10 +55,12 @@ $router->get('/test/update/{id}', 'TestController@update');
 
 //auth admin
 $router->group([
-    'prefix' => 'api'
+    'prefix' => 'auth'
 ], function ($router) { 
     $router->post('/login/admin', 'AuthController@login');
-    $router->get('/logout/admin/{id_admin}', 'AuthController@logout_admin');
+    $router->post('logout', 'AuthController@logout');
+    $router->post('refresh', 'AuthController@refresh');
+    $router->post('admin-profile', 'AuthController@me');
 });
 
 //auth peserta

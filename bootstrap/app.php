@@ -24,8 +24,8 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withFacades();
-$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->withEloquent();
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 $app->configure('cors');
@@ -99,8 +99,8 @@ $app->routeMiddleware([
 
 // $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
-$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
