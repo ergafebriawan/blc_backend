@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Soal extends Model
+class MediaUpload extends Model
 {
-    protected $table = 'soal';
+    protected $table = 'media_upload';
 
     protected static function boot(){
         parent::boot();
@@ -34,13 +34,7 @@ class Soal extends Model
      * @var string[]
      */
     protected $fillable = [
-        'jenis_test',
-        'type', 
-        'test',
-        'page',
-        'title',
-        'content',
-        'timer',
-        'audio'
+        'name_file', 
+        'path'
     ];
 }

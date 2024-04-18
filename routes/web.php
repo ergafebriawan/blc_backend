@@ -7,6 +7,8 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\SoalController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\AuthAdminController;
+use App\Http\Controllers\AuthController;
 use FastRoute\Route;
 use Laravel\Lumen\Routing\Router;
 
@@ -27,8 +29,13 @@ $router->get('/', function () use ($router) {
 
 ////API for admin
 //admin
-$router->get('/admin', 'AdminController@index');
-$router->get('/admin/{id}', 'AdminController@detail');
+$router->group(
+    ['prefix' => 'admin'],
+    function ($router){
+        $router->get('/', 'AdminController@index');
+        $router->get('/{id}', 'AdminController@detail');
+    }
+);
 
 //soal
 $router->get('/soal/{jenis}', 'SoalController@get_soal');
@@ -57,10 +64,10 @@ $router->get('/test/update/{id}', 'TestController@update');
 $router->group([
     'prefix' => 'auth'
 ], function ($router) { 
-    $router->post('/login/admin', 'AuthController@login');
-    $router->post('logout', 'AuthController@logout');
-    $router->post('refresh', 'AuthController@refresh');
-    $router->post('admin-profile', 'AuthController@me');
+    $router->post('/login/admin', 'AuthController@login_admin');
+    $router->post('/logout/admin', 'AuthController@logout_admin');
+    $router->post('/refresh/admin', 'AuthController@refresh');
+    $router->post('/profile/admin', 'AuthController@me');
 });
 
 //auth peserta

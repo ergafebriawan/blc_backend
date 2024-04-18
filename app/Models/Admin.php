@@ -9,36 +9,38 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Str;
 
 class Admin extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable, HasFactory;
 
-    protected $connection = 'mysql';
+    protected static function boot(){
+        parent::boot();
+        static::creating(function ($model){
+            if(!$model->getKey()){
+                $model->{$model->getKeyName()} = (string) Str::uuid()->toString();
+            }
+        });
+    }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
+
     protected $fillable = [
         'username'
     ];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
 
     public function getJWTIdentifier()
     {

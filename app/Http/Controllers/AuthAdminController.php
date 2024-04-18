@@ -2,57 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Peserta;
 use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+class AuthAdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(
-            'auth:api',
-            [
-                'except' => [
-                    'login_admin',
-                    'refresh',
-                    'logout_admin'
-                ]
-            ]
-        );
+        
     }
 
-    public function login_peserta(Request $request)
-    {
-        return response()->json();
-    }
-
-    public function login_admin(Request $request): JsonResponse
+    public function login(Request $request): JsonResponse
     {
         $this->validate($request, [
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        $credentials = $request->only(['username', 'password']);
+        
 
-        if (!$token = Auth::attempt($credentials)) {
-            return response()->json(
-                $this->responses(false, 'password salah'),
-                Response::HTTP_UNAUTHORIZED
-            );
-        }
-
-        $d = [
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'admin' => auth()->user(),
-            'expires_in' => auth()->factory()->getTTL() * 60 * 24
-        ];
+        $d = Admin::where('username', $request->input('username'));
+        // $d = [
+        //     'access_token' => $token,
+        //     'token_type' => 'bearer',
+        //     'admin' => auth()->user(),
+        //     'expires_in' => auth()->factory()->getTTL() * 60 * 24
+        // ];
 
         return response()->json(
             $this->responses(true, 'login berhasil', $d),

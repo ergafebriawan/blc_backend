@@ -14,7 +14,7 @@ class TestController extends Controller
      */
     public function __construct()
     {
-        //
+        $this->middleware('auth:api');
     }
 
     public function index(): JsonResponse{
@@ -29,7 +29,7 @@ class TestController extends Controller
     }
 
     public function detail($id):JsonResponse{
-        $test_detail = Test::where("_id", $id)->get();
+        $test_detail = Test::where("id", $id)->get();
         if(count($test_detail) > 0){
             $res = $this->responses(true, "get detail data test", $test_detail[0]);
         }else{
@@ -41,11 +41,11 @@ class TestController extends Controller
 
     public function update($id): JsonResponse{
         $state = false;
-        $data = Test::where("_id", $id)->get();
+        $data = Test::where("id", $id)->get();
         if($data[0]->status == $state){
             $state = true;
         }
-        $test_update = Test::where("_id", $id)->update(['status' => $state]);
+        $test_update = Test::where("id", $id)->update(['status' => $state]);
         if($test_update){
             $res = $this->responses(true, "success update data");
         }else{

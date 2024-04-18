@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Soal extends Model
+class JenisSoal extends Model
 {
-    protected $table = 'soal';
+    protected $table = 'jenis_soal';
 
     protected static function boot(){
         parent::boot();
@@ -28,19 +28,7 @@ class Soal extends Model
         return 'string';
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
     protected $fillable = [
-        'jenis_test',
-        'type', 
-        'test',
-        'page',
-        'title',
-        'content',
-        'timer',
-        'audio'
+        'type_soal'
     ];
 }

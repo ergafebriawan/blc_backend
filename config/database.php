@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mongodb'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,18 +53,18 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_AUTH_HOST', 'localhost'),
-            'port' => env('DB_AUTH_PORT', 3306),
-            'database' => env('DB_AUTH_DATABASE', 'auth_blc'),
-            'username' => env('DB_AUTH_USERNAME', 'root'),
-            'password' => env('DB_AUTH_PASSWORD', ''),
-            'unix_socket' => env('DB_AUTH_SOCKET', ''),
-            'charset' => env('DB_AUTH_CHARSET', 'utf8mb4'),
-            'collation' => env('DB_AUTH_COLLATION', 'utf8mb4_unicode_ci'),
-            'prefix' => env('DB_AUTH_PREFIX', ''),
-            'strict' => env('DB_AUTH_STRICT_MODE', true),
-            'engine' => env('DB_AUTH_ENGINE', null),
-            'timezone' => env('DB_AUTH_TIMEZONE', '+00:00'),
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', 3306),
+            'database' => env('DB_DATABASE', 'toelf_db'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => env('DB_CHARSET', 'utf8mb4'),
+            'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => env('DB_PREFIX', ''),
+            'strict' => env('DB_STRICT_MODE', true),
+            'engine' => env('DB_ENGINE', null),
+            'timezone' => env('DB_TIMEZONE', '+00:00'),
         ],
 
         'pgsql' => [
