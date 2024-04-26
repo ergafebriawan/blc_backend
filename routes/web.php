@@ -7,7 +7,6 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\SoalController;
 use App\Http\Controllers\OptionController;
-use App\Http\Controllers\AuthAdminController;
 use App\Http\Controllers\AuthController;
 use FastRoute\Route;
 use Laravel\Lumen\Routing\Router;
@@ -38,27 +37,39 @@ $router->group(
 );
 
 //soal
-$router->get('/soal/{jenis}', 'SoalController@get_soal');
-$router->post('/soal', 'SoalController@create');
-$router->get('/soal/detail/{id}', 'SoalController@detail_soal');
-$router->put('/soal/{id}', 'SoalController@update');
-$router->delete('/soal/{id}', 'SoalController@delete');
+$router->group([
+    'prefix' => 'soal'
+],function($router){
+    $router->post('/', 'SoalController@create');
+    $router->get('/{jenis}', 'SoalController@get_soal');
+    $router->get('/detail/{id}', 'SoalController@detail_soal');
+    $router->put('/{id}', 'SoalController@update');
+    $router->delete('/{id}', 'SoalController@delete');
+});
 
 //peserta
-$router->get('/peserta', 'PesertaController@index');
-$router->get('/peserta/{id}', 'PesertaController@detail');
-$router->post('/peserta', 'PesertaController@create');
-$router->put('/peserta/{id}', 'PesertaController@update');
-$router->delete('/peserta/{id}', 'PesertaController@delete');
-$router->put('/peserta/active/{id_peserta}','PesertaController@active_test');
-$router->get('/peserta/by-test/{id_test}','PesertaController@show_by_test');
-$router->put('/peserta/upload_photo/{id_peserta}', 'PesertaController@upload_photo');
-$router->get('/peserta/filter/{params}','PesertaController@filter');
+$router->group([
+    'prefix' => 'peserta',
+], function ($router){
+    $router->get('/', 'PesertaController@index');
+    $router->post('/', 'PesertaController@create');
+    $router->get('/{id}', 'PesertaController@detail');
+    $router->put('/{id}', 'PesertaController@update');
+    $router->delete('/{id}', 'PesertaController@delete');
+    $router->put('/active/{id_peserta}','PesertaController@active_test');
+    $router->get('/by-test/{id_test}','PesertaController@show_by_test');
+    $router->put('/upload_photo/{id_peserta}', 'PesertaController@upload_photo');
+    $router->get('/filter/{params}','PesertaController@filter');
+});
 
 //test
-$router->get('/test', 'TestController@index');
-$router->get('/test/{id}', 'TestController@detail');
-$router->get('/test/update/{id}', 'TestController@update');
+$router->group([
+    'prefix' => 'test'
+], function ($router){
+    $router->get('/', 'TestController@index');
+    $router->get('/{id}', 'TestController@detail');
+    $router->get('/update/{id}', 'TestController@update');
+});
 
 //auth admin
 $router->group([

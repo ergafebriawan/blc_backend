@@ -32,7 +32,7 @@ class Peserta extends Model
         'no_reg', 
         'role_kelas',
         'jenis_peserta',
-        'nama',
+        'nama_peserta',
         'email',
         'no_hp',
         'gender',

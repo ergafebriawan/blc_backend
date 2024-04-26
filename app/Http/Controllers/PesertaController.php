@@ -3,27 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Peserta;
+use App\Models\MediaUpload;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PesertaController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware(
-            'auth:api'
-        );
+        $this->middleware('auth:api');
     }
 
     public function index(): JsonResponse{
-        $peserta = Peserta::all();
-        if(count($peserta) > 0){
+        $peserta = Peserta::join('jenis_kelas', 'peserta.role_kelas', '=', 'jenis_kelas.id')
+                        ->join('role_peserta', 'peserta.jenis_peserta', '=', 'role_peserta.id')
+                        ->select(
+                            'peserta.id as id_peserta',
+                            'peserta.no_reg',
+                            'jenis_kelas.nama_kelas as kelas',
+                            'role_peserta.nama_role as role',
+                            'peserta.nama_peserta',
+                            'peserta.email',
+                            'peserta.no_hp',
+                            'peserta.gender',
+                            'peserta.tgl_lahir',
+                            'peserta.instansi',
+                            'peserta.alamat',
+                            'peserta.profile_picture',
+                            'peserta.active_test'
+                        )
+                        ->get();
+        if(empty($peserta) == false){
             return response()->json(
                 $this->responses(true, 'get semua data peserta', $peserta), 
                 Response::HTTP_OK
@@ -37,7 +48,25 @@ class PesertaController extends Controller
     }
 
     public function detail($id):JsonResponse{
-        $detail_peserta = Peserta::where('_id', $id)->get();
+        $detail_peserta = Peserta::where('peserta.id', $id)
+                                ->join('jenis_kelas', 'peserta.role_kelas', '=', 'jenis_kelas.id')
+                                ->join('role_peserta', 'peserta.jenis_peserta', '=', 'role_peserta.id')
+                                ->select(
+                                    'peserta.id as id_peserta',
+                                    'peserta.no_reg',
+                                    'jenis_kelas.nama_kelas as kelas',
+                                    'role_peserta.nama_role as role',
+                                    'peserta.nama_peserta',
+                                    'peserta.email',
+                                    'peserta.no_hp',
+                                    'peserta.gender',
+                                    'peserta.tgl_lahir',
+                                    'peserta.instansi',
+                                    'peserta.alamat',
+                                    'peserta.profile_picture',
+                                    'peserta.active_test'
+                                )
+                                ->get();
         if(count($detail_peserta) > 0){
             return response()->json(
                 $this->responses(true, 'get detail data peserta id = '.$id, $detail_peserta[0]), 
@@ -56,17 +85,13 @@ class PesertaController extends Controller
             "no_reg" => $request->input("no_reg"),
             "role_kelas" => $request->input("role_kelas"),
             "jenis_peserta" => $request->input("jenis_peserta"),
-            "nama" => $request->input("nama"),
+            "nama_peserta" => $request->input("nama_peserta"),
             "email" => $request->input("email"),
             "no_hp" => $request->input("no_hp"),
             "gender" => $request->input("gender"),
             "tgl_lahir" => $request->input("tgl_lahir"),
             "instansi" => $request->input("instansi"),
-            "alamat" => $request->input("alamat"),
-            "picture_profile" => null,
-            "token" => null,
-            "created_at" => date("Y-m-d H:i:s", time()),
-            "updated_at" => date("Y-m-d H:i:s", time())
+            "alamat" => $request->input("alamat")
         ];
 
         $data_valid = Peserta::where('no_reg', $request->input("no_reg"))->get();
@@ -89,17 +114,16 @@ class PesertaController extends Controller
             "no_reg" => $request->input("no_reg"),
             "role_kelas" => $request->input("role_kelas"),
             "jenis_peserta" => $request->input("jenis_peserta"),
-            "nama" => $request->input("nama"),
+            "nama_peserta" => $request->input("nama_peserta"),
             "email" => $request->input("email"),
             "no_hp" => $request->input("no_hp"),
             "gender" => $request->input("gender"),
             "tgl_lahir" => $request->input("tgl_lahir"),
             "instansi" => $request->input("instansi"),
-            "alamat" => $request->input("alamat"),
-            "updated_at" => date("Y-m-d H:i:s", time())
+            "alamat" => $request->input("alamat")
         ];
 
-        $peserta_update = Peserta::where("_id", $id)->update($data);
+        $peserta_update = Peserta::where("id", $id)->update($data);
         if($peserta_update){
             return response()->json(
                 $this->responses(true, 'berhasil update data id:'.$id, $data), 
@@ -114,13 +138,18 @@ class PesertaController extends Controller
     }
 
     public function delete($id): JsonResponse{
-        $delete_peserta = Peserta::where("_id", $id)->delete();
+        $delete_peserta = Peserta::where("id", $id)->delete();
         if($delete_peserta){
-            $res = $this->responses(true, 'berhasil hapus peserta id:'.$id);
+            return response()->json(
+                $this->responses(true, 'berhasil hapus peserta id:'.$id),
+                Response::HTTP_OK
+            );
         }else{
-            $res = $this->responses(false, 'gagal hapus data peserta id:'.$id);
+            return response()->json(
+                $this->responses(false, 'gagal hapus data peserta id:'.$id),
+                Response::HTTP_OK
+            );
         }
-        return response()->json($res);
     }
 
     public function filter($params): JsonResponse{
@@ -129,7 +158,7 @@ class PesertaController extends Controller
     }
 
     public function active_test(Request $request, $id_peserta): JsonResponse{
-        $data_peserta = Peserta::where("_id", $id_peserta)->get();
+        $data_peserta = Peserta::where("id", $id_peserta)->get();
         if(count($data_peserta) == 0){
             $res = $this->responses(false, 'peserta tidak ditemukan');
         }
@@ -148,17 +177,23 @@ class PesertaController extends Controller
     }
 
     public function upload_photo(Request $request, $id_peserta):JsonResponse{
-        $data_peserta = Peserta::where('_id', $id_peserta)->get();
+        $data_peserta = Peserta::where('id', $id_peserta)->get();
         if(count($data_peserta) > 0){
-            $file = 'photo_profile.jpg';
-            $path = 'storage/photo_profile/'.$file;
-            $up_data = [
-                "name_file" => $file,
-                "path" => $path
-            ];
-            Peserta::where("_id", $id_peserta)->update([
-                "profile" => $up_data
+            $this->validate($request, [
+                'file_upload' => 'required|images|mimes:jpg,jpeg,gif,png|max:4096'
             ]);
+            $file = $request->file('file_upload');
+            
+            $filename = uniqid().'.'.$file->getClientOriginalExtension();
+            $path = 'profile_picture/';
+            $up_data = [
+                "name_file" => $filename,
+                "path" => $path.'/'.$filename
+            ];
+            $file->storeAs($path, $filename);
+            // Peserta::where("_id", $id_peserta)->update([
+            //     "profile" => $up_data
+            // ]);
             $res = $this->responses(true, 'upload successfully', $up_data);
         }else{
             $res = $this->responses(false, 'user tidak ditemukan');
