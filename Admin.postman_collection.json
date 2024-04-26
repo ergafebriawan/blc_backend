@@ -1,0 +1,680 @@
+{
+	"info": {
+		"_postman_id": "5675913d-23d7-44c0-ba60-284d47b5b363",
+		"name": "Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10186820"
+	},
+	"item": [
+		{
+			"name": "peserta",
+			"item": [
+				{
+					"name": "get all peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/peserta",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get detail peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/peserta/e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"no_reg\": \"9485693459347598321\",\r\n    \"role_kelas\": \"2c80f6e4-9dac-46c8-ab53-6f934851cbce\",\r\n    \"jenis_peserta\": \"928fe968-53b2-4053-816e-be0315c2ea10\",\r\n    \"nama_peserta\": \"perompak\",\r\n    \"email\": \"perompak@gmail.com\",\r\n    \"no_hp\": \"085643243876\",\r\n    \"gender\": \"perempuan\",\r\n    \"tgl_lahir\": \"2001-04-09\",\r\n    \"instansi\": \"PNS\",\r\n    \"alamat\": \"Blitar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/peserta",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"no_reg\": \"948569345934759000\",\r\n    \"role_kelas\": \"2c80f6e4-9dac-46c8-ab53-6f934851cbce\",\r\n    \"jenis_peserta\": \"928fe968-53b2-4053-816e-be0315c2ea10\",\r\n    \"nama_peserta\": \"perompak senja\",\r\n    \"email\": \"perompaksenja@gmail.com\",\r\n    \"no_hp\": \"085643243874\",\r\n    \"gender\": \"laki-laki\",\r\n    \"tgl_lahir\": \"2001-03-13\",\r\n    \"instansi\": \"Fakultas Ekonomi\",\r\n    \"alamat\": \"Maluku\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/peserta/e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/peserta/e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "active test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"num_test\": 1,\r\n    \"name_test\": \"post test\",\r\n    \"nilai\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}",
+							"host": [
+								"{{baseURL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/peserta/by-test/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"by-test",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload photo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "postman-cloud:///1eefe40a-4c5c-42d0-ba56-51a36aec191e"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/peserta/upload_photo/201f7be2-ad1a-4342-9432-93b294108ba2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"upload_photo",
+								"201f7be2-ad1a-4342-9432-93b294108ba2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/peserta/filter/{params}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"filter",
+								"{params}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "add admin",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "All admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXV0aFwvbG9naW5cL2FkbWluIiwiaWF0IjoxNzEyNjI5MTUwLCJleHAiOjE3MTI2MzI3NTAsIm5iZiI6MTcxMjYyOTE1MCwianRpIjoiT3VJSkxaYmNsbG44YVJrNyIsInN1YiI6MSwicHJ2IjoiZGY4ODNkYjk3YmQwNWVmOGZmODUwODJkNjg2YzQ1ZTgzMmU1OTNhOSJ9.htfazJ4kIYORA3SdZ5eud84A-tBD08bnorjqBVirEQk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "option",
+			"item": [
+				{
+					"name": "jenis kelas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/jenis_kelas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"jenis_kelas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/role_peserta",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"role_peserta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/login/admin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"login",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/auth/logout/admin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"logout",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/auth/refresh/admin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"refresh",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/auth/profile/admin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"profile",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"item": [
+				{
+					"name": "test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/test",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "detail test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/test/08fb646c-591c-4efa-9604-1de18bdbe7e2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"test",
+								"08fb646c-591c-4efa-9604-1de18bdbe7e2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update test enable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/test/update/08fb646c-591c-4efa-9604-1de18bdbe7e2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"test",
+								"update",
+								"08fb646c-591c-4efa-9604-1de18bdbe7e2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "soal",
+			"item": [
+				{
+					"name": "get soal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/soal/prestest",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal",
+								"prestest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jenis_test\": \"prestest\",\r\n    \"type\": \"example\",\r\n    \"test\": \"listening\",\r\n    \"page-title\": \"LISTENING\",\r\n    \"page-subtitle\": \"EXAMPLE\",\r\n    \"title\": \"\",\r\n    \"subtitle\": \"You learn from the conversation that neither the man nor the woman likes the painting. The best answer to the question \\u201cWhat does the man mean?\\u201d is (A), \\u201cHe doesn\\u2019t like the painting either.\\u201d Therefore, the correct choice is (A).\",\r\n    \"no\": 0,\r\n    \"a\": \"He does not like the painting either.\",\r\n    \"b\": \"He does not know how to paint.\",\r\n    \"c\": \"He does not have any paintings.\",\r\n    \"d\": \"He does not know what to do.\",\r\n    \"key\": \"a\",\r\n    \"timer\": 60,\r\n    \"audio\": \"listening-parta-example\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
