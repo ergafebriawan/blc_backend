@@ -15,24 +15,38 @@ class CreateSoalTable extends Migration
     {
         Schema::create('soal', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('jenis_test');
-            $table->uuid('type');
+            $table->integer('index');
+            $table->uuid('type_test');
+            $table->uuid('type_soal');
+            $table->string('test', 255);
             $table->string('page_title', 255)->nullable();
             $table->string('page_subtitle', 255)->nullable();
             $table->string('title', 255)->nullable();
             $table->string('subtitle', 255)->nullable();
-            $table->integer('no');
-            $table->text('a');
-            $table->text('b');
-            $table->text('c');
-            $table->text('d');
-            $table->string('key');
-            $table->integer('timer');
+            $table->text('content')->nullable();
+            $table->text('paragraph_title')->nullable();
+            $table->text('paragraph')->nullable();
+            $table->integer('no')->nullable();
+            $table->text('a')->nullable();
+            $table->text('b')->nullable();
+            $table->text('c')->nullable();
+            $table->text('d')->nullable();
+            $table->string('key', 10)->nullable();
+            $table->integer('timer')->default(0);
             $table->uuid('audio')->nullable();
             $table->timestamps();
 
-            $table->foreign('jenis_test')->references('id')->on('test')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('type')->references('id')->on('jenis_soal')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('type_test')
+                    ->references('id')
+                    ->on('test')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+
+            $table->foreign('type_soal')
+                    ->references('id')
+                    ->on('jenis_soal')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
         });
     }
 

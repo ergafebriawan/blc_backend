@@ -34,13 +34,23 @@ class Soal extends Model
      * @var string[]
      */
     protected $fillable = [
-        'jenis_test',
-        'type', 
+        'index',
+        'type_test',
+        'type_soal', 
         'test',
-        'page',
+        'page_title',
+        'page_subtitle',
         'title',
+        'subtitle',
         'content',
+        'paragraph_title',
+        'paragraph',
+        'no',
+        'a',
+        'b',
+        'c',
+        'd',
+        'key',
         'timer',
-        'audio'
     ];
 }

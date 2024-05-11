@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             JenisKelasSeeder::class,
             JenisSoalSeeder::class,
             RolePesertaSeeder::class,
-            TestSeeder::class
+            TestSeeder::class,
+            PesertaSeeder::class,
+            SoalSeeder::class
         ]);
     }
 }
