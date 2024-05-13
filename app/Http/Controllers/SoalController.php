@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class SoalController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -120,69 +116,49 @@ class SoalController extends Controller
         if (count($soal) > 0) {
             $jenis_soal = $request->input("type");
             $data_jenis_soal = DB::table('jenis_soal')->select('type_soal')->where('id', $jenis_soal)->first();
-            $data = [];
+            $data = [
+                "index"         => $request->input('index'),
+                "type_test"     => $request->input('type_test'),
+                "type_soal"     => $request->input('type_soal'),
+                "test"          => $request->input('test'),
+                "page_title"    => $request->input('page_title'),
+                "page_subtitle" => $request->input('page_subtitle'),
+                "title"         => $request->input('title'),
+                "subtitle"      => $request->input('subtitle'),
+                "timer"         => $request->input('timer')
+            ];
+            $result_data = [];
 
             if ($data_jenis_soal === "blank" || $data_jenis_soal == "question") {
-                $data = [
-                    "jenis_test" => $request->input('jenis_test'),
-                    "type" => $request->input('type'),
-                    "test" => $request->input('test'),
-                    "page-title" => $request->input('page-title'),
-                    "page-subtitle" => $request->input('page-subtitle'),
-                    "title" => $request->input('title'),
-                    "subtitle" => $request->input('subtitle'),
-                    "timer" => $request->input('timer')
-                ];
+                $result_data = $data;
             } else if ($data_jenis_soal === "card") {
-                $data = [
-                    "jenis_test" => $request->input('jenis_test'),
-                    "type" => $request->input('type'),
-                    "test" => $request->input('test'),
-                    "page-title" => $request->input('page-title'),
-                    "page-subtitle" => $request->input('page-subtitle'),
-                    "title" => $request->input('title'),
-                    "subtitle" => $request->input('subtitle'),
-                    "content" => $request->input('content'),
-                    "timer" => $request->input('timer')
+                $content = [
+                    "content" => $request->input('content')
                 ];
             } else if ($data_jenis_soal == "example" || $data_jenis_soal == "test" || $data_jenis_soal == "test1") {
-                $data = [
-                    "jenis_test" => $request->input('jenis_test'),
-                    "type" => $request->input('type'),
-                    "test" => $request->input('test'),
-                    "page_title" => $request->input('page-title'),
-                    "page_subtitle" => $request->input('page-subtitle'),
-                    "title" => $request->input('title'),
-                    "subtitle" => $request->input('subtitle'),
+                $content = [
                     "no" => $request->input('no'),
                     "a" => $request->input('a'),
                     "b" => $request->input('b'),
                     "c" => $request->input('c'),
                     "d" => $request->input('d'),
-                    "key" => $request->input('key'),
-                    "timer" => $request->input('timer')
+                    "key" => $request->input('key')
                 ];
+                $result_data = $data + $content;
             } else if ($data_jenis_soal === "paragraph") {
-                $data = [
-                    "jenis_test" => $request->input('jenis_test'),
-                    "type" => $request->input('type'),
-                    "test" => $request->input('test'),
-                    "page-title" => $request->input('page-title'),
-                    "page-subtitle" => $request->input('page-subtitle'),
-                    "title" => $request->input('title'),
-                    "subtitle" => $request->input('subtitle'),
-                    "paragraph-title" => $request->input('p-title'),
+                $content = [
+                    "paragraph_title" => $request->input('p-title'),
                     "paragraph" => $request->input('paragraph'),
                     "a" => $request->input('a'),
                     "b" => $request->input('b'),
                     "c" => $request->input('c'),
                     "d" => $request->input('d'),
-                    "key" => $request->input("key"),
-                    "timer" => $request->input('timer')
+                    "key" => $request->input("key")
                 ];
+                $result_data = $data + $content;
             }
             try {
-                Soal::where('id', $id)->update($data);
+                Soal::where('id', $id)->update($result_data);
                 return response()->json($this->responses(true, 'berhasil update soal'));
             } catch (\Throwable $th) {
                 return response()->json($this->responses(false, 'gagal update soal'));
