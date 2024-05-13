@@ -14,25 +14,25 @@ This service build with laravel lumen, check below:
 ## Get started
 
 pull this project and install depedencies with composer command 
-```composer install```
+````composer install````
 
 generate JWT secret key with
-```php artisan key:generate```
+````php artisan key:generate````
 
 
 ## Database Migration
 
 1. create database in MySQL
 2. migrate database follow this command
-```php artisan migrate ```
+````php artisan migrate ````
     or update the database
-```php artisan migrate:refresh ```
+````php artisan migrate:refresh ````
 
 3. run seeder on this command
-```php artisan db:seed ```
+````php artisan db:seed ````
 
 
 ## Run Project
 
 when finish setup the project you can run this command:
-```php -S localhost:8000 -t public ```
+````php -S localhost:8000 -t public ````
