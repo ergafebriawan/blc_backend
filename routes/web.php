@@ -8,6 +8,7 @@ use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\SoalController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MediaController;
 use FastRoute\Route;
 use Laravel\Lumen\Routing\Router;
 
@@ -45,6 +46,7 @@ $router->group([
     $router->get('/detail/{id}', 'SoalController@detail_soal');
     $router->put('/{id}', 'SoalController@update');
     $router->delete('/{id}', 'SoalController@delete');
+    $router->post('/upload_audio/{id_soal}', 'MediaController@upload_audio');
 });
 
 //peserta
@@ -58,7 +60,7 @@ $router->group([
     $router->delete('/{id}', 'PesertaController@delete');
     $router->put('/active/{id_peserta}','PesertaController@active_test');
     $router->get('/by-test/{id_test}','PesertaController@show_by_test');
-    $router->put('/upload_photo/{id_peserta}', 'PesertaController@upload_photo');
+    $router->post('/upload_photo/{id_peserta}', 'MediaController@upload_photo');
     $router->get('/filter/{params}','PesertaController@filter');
 });
 
@@ -86,3 +88,5 @@ $router->group([
 //option
 $router->get('/role_peserta', 'OptionController@role_peserta');
 $router->get('/jenis_kelas', 'OptionController@jenis_kelas');
+$router->delete('/photo_profile/{id}', 'MediaController@delete_media');
+$router->get('/media/{jenis_media}/{id_file}', 'MediaController@get_media');

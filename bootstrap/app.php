@@ -27,11 +27,15 @@ $app->withFacades();
 $app->withEloquent();
 // $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 
+//CORS
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 $app->configure('cors');
 $app->middleware([
     Fruitcake\Cors\HandleCors::class,
 ]);
+
+//Image processing
+// $app->register(Intervention\Image\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

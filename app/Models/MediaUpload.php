@@ -35,6 +35,7 @@ class MediaUpload extends Model
      */
     protected $fillable = [
         'name_file', 
-        'path'
+        'path',
+        'jenis_file'
     ];
 }

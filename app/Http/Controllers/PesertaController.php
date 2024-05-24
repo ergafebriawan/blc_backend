@@ -7,6 +7,7 @@ use App\Models\MediaUpload;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class PesertaController extends Controller
 {
@@ -179,22 +180,31 @@ class PesertaController extends Controller
     public function upload_photo(Request $request, $id_peserta):JsonResponse{
         $data_peserta = Peserta::where('id', $id_peserta)->get();
         if(count($data_peserta) > 0){
-            $this->validate($request, [
-                'file_upload' => 'required|images|mimes:jpg,jpeg,gif,png|max:4096'
+            $this->validate($request,[
+                'image' => 'required|mimes:jpg,jpeg,gif,png|max:4096'
             ]);
-            $file = $request->file('file_upload');
+            $file = $request->file('image');
             
-            $filename = uniqid().'.'.$file->getClientOriginalExtension();
-            $path = 'profile_picture/';
+            $filename = uniqid().'-'.$data_peserta[0]->no_reg.'.'.$file->getClientOriginalExtension();
+            $path = 'profile_picture';
             $up_data = [
                 "name_file" => $filename,
-                "path" => $path.'/'.$filename
+                "path" => $path.'/'.$filename,
+                "jenis_file" => 'images'
             ];
-            $file->storeAs($path, $filename);
-            // Peserta::where("_id", $id_peserta)->update([
-            //     "profile" => $up_data
-            // ]);
-            $res = $this->responses(true, 'upload successfully', $up_data);
+            $file->move(storage_path($path), $filename);
+            try {
+                MediaUpload::create($up_data);
+                $get_id_file = MediaUpload::select('id', 'name_file')->where('name_file', $filename)->first();
+                Peserta::where('id', $data_peserta[0]->id)
+                ->update([
+                    'profile_picture' => $get_id_file->id
+                ]);
+                
+                $res = $this->responses(true, 'upload successfully', $up_data);
+            } catch (\Throwable $th) {
+                $res = $this->responses(false, 'error'.$th);
+            }
         }else{
             $res = $this->responses(false, 'user tidak ditemukan');
         }
