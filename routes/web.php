@@ -62,6 +62,7 @@ $router->group([
     $router->get('/by-test/{id_test}','PesertaController@show_by_test');
     $router->post('/upload_photo/{id_peserta}', 'MediaController@upload_photo');
     $router->get('/filter/{params}','PesertaController@filter');
+    $router->get('/generate_kode/{id_peserta}/{id_test}','PesertaController@generate_kode');
 });
 
 //test
@@ -83,10 +84,15 @@ $router->group([
     $router->post('/profile/admin', 'AuthController@me');
 });
 
-//auth peserta
-
 //option
 $router->get('/role_peserta', 'OptionController@role_peserta');
 $router->get('/jenis_kelas', 'OptionController@jenis_kelas');
 $router->delete('/photo_profile/{id}', 'MediaController@delete_media');
 $router->get('/media/{jenis_media}/{id_file}', 'MediaController@get_media');
+
+//auth peserta
+$router->group([
+    'prefix' => 'hasil'
+],function ($router){
+    $router->get('/{id_peserta}/{id_soal}', 'HasilTestController@index');
+});

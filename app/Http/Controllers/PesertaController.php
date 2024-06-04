@@ -177,6 +177,11 @@ class PesertaController extends Controller
         return response()->json($res);
     }
 
+    public function generate_kode($id_peserta, $id_test): JsonResponse{
+        
+        return response()->json();
+    }
+
     public function upload_photo(Request $request, $id_peserta):JsonResponse{
         $data_peserta = Peserta::where('id', $id_peserta)->get();
         if(count($data_peserta) > 0){
