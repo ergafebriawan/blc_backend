@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peserta;
 use App\Models\MediaUpload;
+use App\Models\HasilSoal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -163,23 +164,56 @@ class PesertaController extends Controller
         if(count($data_peserta) == 0){
             $res = $this->responses(false, 'peserta tidak ditemukan');
         }
-
-        return response()->json();
+        
+        $kode_soal = $this->generate_code();
+        $test = $request->input("id_test");
+        $data = [
+            "id_peserta" => $id_peserta,
+            "id_test" => $test,
+            "kode_soal" => $kode_soal
+        ];
+        $create = HasilSoal::create($data);
+        if($create){
+            return response()->json(
+                $this->responses(true, 'berhasil menambahkan activasi test', $data), 
+                Response::HTTP_CREATED
+            );
+        }else{
+            return response()->json(
+                $this->responses(false, 'gagal menambahkan activasi test'), 
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
     public function show_by_test($id_test): JsonResponse{
-        $data_bytest = Peserta::where("test", $id_test)->get();
+        $data_bytest = HasilSoal::join('peserta', 'hasil_test.id_peserta', '=', 'peserta.id')
+                            ->join('test', 'hasil_test.id_test', '=', 'test.id')
+                            ->select(
+                                'peserta.id as id_peserta',
+                            'peserta.no_reg',
+                            'peserta.nama_peserta',
+                            'peserta.email',
+                            'peserta.no_hp',
+                            'peserta.gender',
+                            'peserta.tgl_lahir',
+                            'peserta.instansi',
+                            'peserta.alamat',
+                            'test.jenis_test',
+                            'hasil_test.id as id_test',
+                            'hasil_test.kode_soal',
+                            'hasil_test.listening',
+                            'hasil_test.structure',
+                            'hasil_test.reading'
+                            )
+                            ->where('test.id', $id_test)
+                            ->get();
         if(count($data_bytest) > 0){
             $res = $this->responses(true, 'menampilkan data berdasarkan num test:'.$id_test, $data_bytest);
         }else{
             $res = $this->responses(false, 'empty data');
         }
         return response()->json($res);
-    }
-
-    public function generate_kode($id_peserta, $id_test): JsonResponse{
-        
-        return response()->json();
     }
 
     public function upload_photo(Request $request, $id_peserta):JsonResponse{
@@ -222,5 +256,14 @@ class PesertaController extends Controller
             "message" => $message,
             "data" => $data
         ];
+    }
+
+    protected function generate_code(){
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString.= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $randomString;
     }
 }

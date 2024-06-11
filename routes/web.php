@@ -58,7 +58,7 @@ $router->group([
     $router->get('/{id}', 'PesertaController@detail');
     $router->put('/{id}', 'PesertaController@update');
     $router->delete('/{id}', 'PesertaController@delete');
-    $router->put('/active/{id_peserta}','PesertaController@active_test');
+    $router->post('/active/{id_peserta}','PesertaController@active_test');
     $router->get('/by-test/{id_test}','PesertaController@show_by_test');
     $router->post('/upload_photo/{id_peserta}', 'MediaController@upload_photo');
     $router->get('/filter/{params}','PesertaController@filter');

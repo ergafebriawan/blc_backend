@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class HasilSoal extends Model
 {
-    protected $table = 'hasil_soal';
+    protected $table = 'hasil_test';
 
     protected static function boot(){
         parent::boot();
@@ -36,7 +36,7 @@ class HasilSoal extends Model
     protected $fillable = [
         'id_peserta',
         'id_test',
-        'kode_test', 
+        'kode_soal', 
         'listening',
         'structure',
         'reading'
