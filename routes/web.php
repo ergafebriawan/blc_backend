@@ -89,6 +89,7 @@ $router->get('/role_peserta', 'OptionController@role_peserta');
 $router->get('/jenis_kelas', 'OptionController@jenis_kelas');
 $router->delete('/photo_profile/{id}', 'MediaController@delete_media');
 $router->get('/media/{jenis_media}/{id_file}', 'MediaController@get_media');
+$router->get('/jenis_soal', 'OptionController@jenis_soal');
 
 //auth peserta
 $router->group([

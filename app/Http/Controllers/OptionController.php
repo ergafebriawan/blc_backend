@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JenisKelas;
 use App\Models\RolePeserta;
+use App\Models\JenisSoal;
 use Illuminate\Http\JsonResponse;
 
 class OptionController extends Controller
@@ -26,6 +27,11 @@ class OptionController extends Controller
     public function role_peserta():JsonResponse{
         $role = RolePeserta::all();
         return response()->json($role);
+    }
+
+    public function jenis_soal():JsonResponse{
+        $soal = JenisSoal::all();
+        return response()->json($soal);
     }
 
     
