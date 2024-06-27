@@ -147,7 +147,7 @@ class SoalController extends Controller
                 $result_data = $data + $content;
             } else if ($data_jenis_soal === "paragraph") {
                 $content = [
-                    "paragraph_title" => $request->input('p-title'),
+                    "paragraph_title" => $request->input('p_title'),
                     "paragraph" => $request->input('paragraph'),
                     "a" => $request->input('a'),
                     "b" => $request->input('b'),
