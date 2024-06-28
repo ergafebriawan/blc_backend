@@ -97,3 +97,10 @@ $router->group([
 ],function ($router){
     $router->get('/{id_peserta}/{id_soal}', 'HasilTestController@index');
 });
+
+////API for peserta
+$router->group([
+    'prefix' => 'user'
+], function($router){
+    $router->post('login', 'UserTestController@login_peserta');
+});

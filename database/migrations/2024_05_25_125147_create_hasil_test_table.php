@@ -18,9 +18,11 @@ class CreateHasilTestTable extends Migration
             $table->uuid('id_peserta');
             $table->uuid('id_test');
             $table->string('kode_soal', 255);
-            $table->json('listening')->nullable();
-            $table->json('structure')->nullable();
-            $table->json('reading')->nullable();
+            $table->string('token', 255)->nullable();
+            $table->integer('listening')->nullable();
+            $table->integer('structure')->nullable();
+            $table->integer('reading')->nullable();
+            $table->integer('total')->nullable();
             $table->timestamps();
 
             $table->foreign('id_peserta')

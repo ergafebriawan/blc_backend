@@ -36,9 +36,11 @@ class HasilSoal extends Model
     protected $fillable = [
         'id_peserta',
         'id_test',
-        'kode_soal', 
+        'kode_soal',
+        'token', 
         'listening',
         'structure',
-        'reading'
+        'reading',
+        'total'
     ];
 }

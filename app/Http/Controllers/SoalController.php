@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class SoalController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -225,14 +225,12 @@ class SoalController extends Controller
 
         if ($data->type_soal == 'example' || $data->type_soal == 'test' || $data->type_soal == 'test1') {
             $content = [
-                "content" => [
-                    "no" => $data->no,
-                    "a" => $data->a,
-                    "b" => $data->b,
-                    "c" => $data->c,
-                    "d" => $data->d,
-                    "key" => $data->key,
-                ],
+                "no" => $data->no,
+                "a" => $data->a,
+                "b" => $data->b,
+                "c" => $data->c,
+                "d" => $data->d,
+                "key" => $data->key
             ];
         } else if ($data->type_soal == 'card') {
             $content = [
@@ -240,7 +238,7 @@ class SoalController extends Controller
             ];
         } else if ($data->type_soal == 'paragraph') {
             $content = [
-                "paragraph-title" => $data->paragraph_title,
+                "paragraph_title" => $data->paragraph_title,
                 "paragraph" => $data->paragraph,
                 "a" => $data->a,
                 "b" => $data->b,
