@@ -51,7 +51,7 @@ class SoalSeeder extends Seeder
             "subtitle" => 'You learn from the conversation that neither the man nor the woman likes the painting. The best answer to the question \u201cWhat does the man mean?\u201d is (A), \u201cHe doesn\u2019t like the painting either.\u201d Therefore, the correct choice is (A).',
             "timer" => 60,
             "no" => '0',
-            "a" => 'He does not like the painting either.',
+            "a" => 'the man\u2019s calculator. edit',
             "b" => 'He does not know how to paint.',
             "c" => 'He does not have any paintings.',
             "d" => 'He does not know what to do.',

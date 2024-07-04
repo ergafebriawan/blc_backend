@@ -91,7 +91,7 @@ $router->delete('/photo_profile/{id}', 'MediaController@delete_media');
 $router->get('/media/{jenis_media}/{id_file}', 'MediaController@get_media');
 $router->get('/jenis_soal', 'OptionController@jenis_soal');
 
-//auth peserta
+//auth hasil peserta
 $router->group([
     'prefix' => 'hasil'
 ],function ($router){
@@ -102,5 +102,8 @@ $router->group([
 $router->group([
     'prefix' => 'user'
 ], function($router){
-    $router->post('login', 'UserTestController@login_peserta');
+    $router->post('/login', 'UserTestController@login_peserta');
+    $router->post('/logout', 'UserTestController@logout_peserta');
+    $router->get('/result/{id}', 'UserTestController@detail');
+    $router->post('/profile', 'UserTestController@profile');
 });

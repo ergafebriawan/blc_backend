@@ -29,7 +29,7 @@ class HasilTestController extends Controller
 
     public function detail($id):JsonResponse{
         $detail = HasilSoal::where('id', $id)->first();
-        if(count($detail) > 0){
+        if($detail != null){
             $res = $this->responses(true, "get detail data: ".$id, $detail);
         }else{
             $res = $this->responses(false, "data not found", null);
