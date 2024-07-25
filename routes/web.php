@@ -104,6 +104,6 @@ $router->group([
 ], function($router){
     $router->post('/login', 'UserTestController@login_peserta');
     $router->post('/logout', 'UserTestController@logout_peserta');
-    $router->get('/result/{id}', 'UserTestController@detail');
-    $router->post('/profile', 'UserTestController@profile');
+    $router->get('/result/{id}', 'UserTestController@hasil');
+    $router->post('/profile/{token}', 'UserTestController@profile');
 });

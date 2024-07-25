@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MediaUpload;
 use App\Models\Soal;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,11 +18,10 @@ class SoalController extends Controller
 
     public function get_soal($jenis): JsonResponse
     {
-        $soal = Soal::select()
-            ->where("type_test", $jenis)
+        $soal = Soal::select("soal.*", "test.jenis_test", "jenis_soal.type_soal")
             ->join("test", "soal.type_test", "=", "test.id")
             ->join("jenis_soal", "soal.type_soal", "=", "jenis_soal.id")
-            ->select("soal.*", "test.jenis_test", "jenis_soal.type_soal")
+            ->where("type_test", $jenis)
             ->orderBy('index', 'asc')
             ->get();
         $data = [];
@@ -31,7 +31,7 @@ class SoalController extends Controller
         }
 
         if (count($soal) > 0) {
-            $res = $this->responses(true, 'mengambil data semua soal: ' . $jenis, $data);
+            $res = $this->responses(true, 'mengambil jumlah '.count($data).' semua soal: ' . $jenis, $data);
         } else {
             $res = $this->responses(false, 'soal tidak ditemukan');
         }
@@ -183,10 +183,6 @@ class SoalController extends Controller
         }
     }
 
-    public function upload_audio(Request $request, $id)
-    {
-    }
-
     protected function responses($success, $message, $data = null)
     {
         return [
@@ -208,20 +204,34 @@ class SoalController extends Controller
                 "title" => $data->page_title,
                 "subtitle" => $data->page_subtitle,
             ],
+            "timer" => $data->timer,
             "title" => [
                 "title" => $data->title,
                 "subtitle" => $data->subtitle,
-            ],
-            "timer" => $data->timer,
-            "audio" => [
-                "name_audio" => "example.mp3",
-                "path" => "path/info"
             ],
             "created_at" => $data->created_at,
             "updated_at" => $data->updated_at
         ];
 
         $content = [];
+        $audio = [];
+
+        if($data->audio != null){
+            $data_audio = MediaUpload::select('id', 'name_file', 'path')
+                            ->where('id', $data->audio)
+                            ->first();
+            $audio = [
+                "audio" => [
+                    "name_audio" => $data_audio->name_file,
+                    "path" => $data_audio->path,
+                    "url" => url('media/audio/'.$data_audio->id)
+                ],
+            ];
+        }else{
+            $audio = [
+                "audio" => null,
+            ];
+        }
 
         if ($data->type_soal == 'example' || $data->type_soal == 'test' || $data->type_soal == 'test1') {
             $content = [
@@ -247,7 +257,7 @@ class SoalController extends Controller
                 "key" => $data->key
             ];
         }
-        return $result + $content;
+        return $result + $audio + $content;
     }
 
     protected function get_index($type_test)

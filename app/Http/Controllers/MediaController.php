@@ -58,14 +58,15 @@ class MediaController extends Controller
     public function upload_audio(Request $request, $id_soal): JsonResponse
     {
         $data_soal = Soal::where('id', $id_soal)->get();
-        if(count($data_soal) > 0){
-            $this->validate($request,[
+        if (count($data_soal) > 0) {
+            $this->validate($request, [
                 'audio' => 'required|mimes:mp3,wav'
             ]);
 
             $audio = $request->file('audio');
+            $id_media = $data_soal[0]->audio;
 
-            $filename = $id_soal.'.'.$audio->getClientOriginalExtension();
+            $filename = $id_soal . '_' . $audio->getClientOriginalName();
             $path = 'audio_soal';
             $data_up = [
                 "name_file" => $filename,
@@ -74,21 +75,28 @@ class MediaController extends Controller
             ];
 
             try {
-                $audio->move(storage_path('audio_upload'), $filename);
+                if ($data_soal[0]->audio != null) {
+                    $check_data = MediaUpload::where('id', $data_soal[0]->audio)->first();
+                    $check_file = storage_path($path) . '/' . $check_data->name_file;
+                    if (file_exists($check_file)) {
+                        unlink($check_file);
+                    }
+                    MediaUpload::where('id', $data_soal[0]->audio)->delete();
+                }
+                $audio->move(storage_path($path), $filename);
                 MediaUpload::create($data_up);
                 $get_id_file = MediaUpload::select('id', 'name_file')->where('name_file', $filename)->first();
                 Soal::where('id', $data_soal[0]->id)
                     ->update([
                         'audio' => $get_id_file->id
                     ]);
-
                 $res = $this->responses(true, 'upload successfully', $data_up);
             } catch (\Throwable $th) {
                 $res = $this->responses(false, 'error' . $th);
             }
-        }else{
+        } else {
             $res = $this->responses(false, 'soal tidak ditemukan');
-        } 
+        }
 
         return response()->json($res);
     }
@@ -108,22 +116,23 @@ class MediaController extends Controller
     public function get_media($jenis_media, $id_file)
     {
         $path = '';
+        $content_type = '';
         if ($jenis_media === 'images') {
             $path = 'profile_picture';
+            $content_type = 'image/jpeg';
         } else if ($jenis_media === 'audio') {
-            $path = 'audio';
+            $path = 'audio_soal';
+            $content_type = 'audio/mpeg';
         }
-        // return response()->body($path);
+
         $data = MediaUpload::select('id', 'name_file')->where('id', $id_file)->first();
         $media_path = storage_path($path) . '/' . $data->name_file;
         if (file_exists($media_path)) {
             $file = file_get_contents($media_path);
-            return response($file, 200)->header('Content-Type', 'image/jpeg');
+            return response($file, 200)->header('Content-Type', $content_type);
+        } else {
+            return response()->json($this->responses(false, "media not found"));
         }
-        $res['success'] = false;
-        $res['message'] = "media not found";
-
-        return $res;
     }
 
     protected function responses($success, $message, $data = null)

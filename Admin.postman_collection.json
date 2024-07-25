@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5675913d-23d7-44c0-ba60-284d47b5b363",
+		"_postman_id": "08011f28-8620-4827-87fc-5d8568fabde6",
 		"name": "Admin",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "10186820"
@@ -178,11 +178,11 @@
 								}
 							]
 						},
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"num_test\": 1,\r\n    \"name_test\": \"post test\",\r\n    \"nilai\": 0\r\n}",
+							"raw": "{\r\n    \"id_test\": \"{{pre_test}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -190,9 +190,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}",
+							"raw": "{{baseURL}}/peserta/active/b3711df7-c55e-4a2a-896c-21a834ff4bc1",
 							"host": [
 								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"active",
+								"b3711df7-c55e-4a2a-896c-21a834ff4bc1"
 							]
 						}
 					},
@@ -214,14 +219,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/peserta/by-test/",
+							"raw": "{{baseURL}}/peserta/by-test/{{pre_test}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"peserta",
 								"by-test",
-								""
+								"{{pre_test}}"
 							]
 						}
 					},
@@ -240,27 +245,28 @@
 								}
 							]
 						},
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "file",
+									"key": "image",
+									"description": "profile picture",
 									"type": "file",
 									"src": "postman-cloud:///1eefe40a-4c5c-42d0-ba56-51a36aec191e"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{baseURL}}/peserta/upload_photo/201f7be2-ad1a-4342-9432-93b294108ba2",
+							"raw": "{{baseURL}}/peserta/upload_photo/0dc5e86c-bfc9-406f-8968-dcf0bd940324",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"peserta",
 								"upload_photo",
-								"201f7be2-ad1a-4342-9432-93b294108ba2"
+								"0dc5e86c-bfc9-406f-8968-dcf0bd940324"
 							]
 						}
 					},
@@ -304,7 +310,10 @@
 					"name": "add admin",
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -391,6 +400,80 @@
 							],
 							"path": [
 								"role_peserta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jenis soal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/jenis_soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"jenis_soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete photo profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/photo_profile/f967a691-bf34-48f1-8d54-f3550f487c8b",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"photo_profile",
+								"f967a691-bf34-48f1-8d54-f3550f487c8b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get media",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/media/images/16c852e3-4fce-4c36-9308-2139eaa6b8be",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"media",
+								"images",
+								"16c852e3-4fce-4c36-9308-2139eaa6b8be"
 							]
 						}
 					},
@@ -626,20 +709,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/soal/prestest",
+							"raw": "{{baseURL}}/soal/{{pre_test}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"soal",
-								"prestest"
+								"{{pre_test}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "create soal",
+					"name": "create soal - blank",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -655,7 +738,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"jenis_test\": \"prestest\",\r\n    \"type\": \"example\",\r\n    \"test\": \"listening\",\r\n    \"page-title\": \"LISTENING\",\r\n    \"page-subtitle\": \"EXAMPLE\",\r\n    \"title\": \"\",\r\n    \"subtitle\": \"You learn from the conversation that neither the man nor the woman likes the painting. The best answer to the question \\u201cWhat does the man mean?\\u201d is (A), \\u201cHe doesn\\u2019t like the painting either.\\u201d Therefore, the correct choice is (A).\",\r\n    \"no\": 0,\r\n    \"a\": \"He does not like the painting either.\",\r\n    \"b\": \"He does not know how to paint.\",\r\n    \"c\": \"He does not have any paintings.\",\r\n    \"d\": \"He does not know what to do.\",\r\n    \"key\": \"a\",\r\n    \"timer\": 60,\r\n    \"audio\": \"listening-parta-example\"\r\n}",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{blank}}\",\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"COMPREHENSION\",\r\n    \"title\": \"listening\",\r\n    \"subtitle\": \"COMPREHENSION\",\r\n    \"timer\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -669,6 +752,401 @@
 							],
 							"path": [
 								"soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal - blank Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{blank}}\",\r\n    \"index\": 1,\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"COMPREHENSION\",\r\n    \"title\": \"listening\",\r\n    \"subtitle\": \"COMPREHENSION\",\r\n    \"timer\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal/64877aed-bf1f-461b-b284-9887ac23242d",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal",
+								"64877aed-bf1f-461b-b284-9887ac23242d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal - question",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{question}}\",\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"PART B\",\r\n    \"title\": \"QUESTION 31 - 34\",\r\n    \"subtitle\": \"\",\r\n    \"timer\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal - test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{test}}\",\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"PART A\",\r\n    \"title\": \"-\",\r\n    \"subtitle\": \"-\",\r\n    \"no\": \"10\",\r\n    \"a\": \"the man\\u2019s calculator. edit\",\r\n    \"b\": \"lend the man her calculator.\",\r\n    \"c\": \"calculator  under the man 019s book.\",\r\n    \"d\": \"man will not have time to find the calculator.\",\r\n    \"key\": \"a\",\r\n    \"timer\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal - test1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{test1}}\",\r\n    \"test\": \"structure\",\r\n    \"page_title\": \"WRITTEN\",\r\n    \"page_subtitle\": \"EXAMPLE\",\r\n    \"title\": \"Guppies are sometimes calls rainbow fish because of the males bright colors.\",\r\n    \"subtitle\": \"The sentence should read, \\\"Guppies are sometimes called rainbow fish because of the males bright colors.\\\" Therefore, you should choose (A).\",\r\n    \"no\": \"10\",\r\n    \"a\": \"calls\",\r\n    \"b\": \"fish\",\r\n    \"c\": \"because of\",\r\n    \"d\": \"bright\",\r\n    \"key\": \"a\",\r\n    \"timer\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal - example",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{example}}\",\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"EXAMPLE\",\r\n    \"title\": \"-\",\r\n    \"subtitle\": \"You learn from the conversation that neither the man nor the woman likes the painting. The best answer to the question \\u201cWhat does the man mean?\\u201d is (A), \\u201cHe doesn\\u2019t like the painting either.\\u201d Therefore, the correct choice is (A).\",\r\n    \"no\": \"10\",\r\n    \"a\": \"the man\\u2019s calculator. edit\",\r\n    \"b\": \"He does not know how to paint.\",\r\n    \"c\": \"He does not have any paintings.\",\r\n    \"d\": \"He does not know what to do.\",\r\n    \"key\": \"a\",\r\n    \"timer\": 60\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal - card",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{card}}\",\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"-\",\r\n    \"title\": \"PART A\",\r\n    \"subtitle\": \"DIRECTIONS\",\r\n    \"content\": \"A In Part ABX, you will hear short conversations between two people. After each conversation, you will hear a question about the conversation. The conversations and questions will not be repeated. <br><br>After you hear a question, read the four possible answers and choose the best answer.\",\r\n    \"timer\": 60\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create soal - paragraph",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{paragraph}}\",\r\n    \"test\": \"reading\",\r\n    \"page_title\": \"READING\",\r\n    \"page_subtitle\": \"COMPREHENSION\",\r\n    \"title\": \"The phrase \\u201cthis trend\\u201d in line 14 refers to\",\r\n    \"subtitle\": \"The phrase \\u201cthis trend\\u201d in line 14 refers to\",\r\n    \"p_title\": \"Questions 1-10\",\r\n    \"paragraph\": \"A In Part ABX, you will hear short conversations between two people. After each conversation, you will hear a question about the conversation. The conversations and questions will not be repeated. <br><br>After you hear a question, read the four possible answers and choose the best answer. A In Part ABX, you will hear short conversations between two people. After each conversation, you will hear a question about the conversation. The conversations and questions will not be repeated. <br><br>After you hear a question, read the four possible answers and choose the best answer. A In Part ABX, you will hear short conversations between two people. After each conversation, you will hear a question about the conversation. The conversations and questions will not be repeated. <br><br>After you hear a question, read the four possible answers and choose the best answer.\",\r\n    \"no\": \"6\",\r\n    \"a\": \"Industrial workers becoming farmers\",\r\n    \"b\": \"The economic development of the countryside\",\r\n    \"c\": \"The loss of rural population\",\r\n    \"d\": \"Innovations in manufacturing\",\r\n    \"key\": \"c\",\r\n    \"timer\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete soal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/soal/39c7e6b9-f655-416a-a73e-8bb854e7d950",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal",
+								"39c7e6b9-f655-416a-a73e-8bb854e7d950"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update soal",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "detail soal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/soal/detail/7bfcf0c6-7085-409b-bdcd-ec170d314c36",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal",
+								"detail",
+								"7bfcf0c6-7085-409b-bdcd-ec170d314c36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload audio",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audio",
+									"type": "file",
+									"src": "/C:/laragon/www/septian/audio/2-listening-5.mp3"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/soal/upload_audio/aa274f8c-8b21-4a3e-9c1e-f7ee5ceaf951",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"soal",
+								"upload_audio",
+								"aa274f8c-8b21-4a3e-9c1e-f7ee5ceaf951"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get media",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/media/audio/1a9d5674-23c5-4557-b97d-4c838f645a10",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"media",
+								"audio",
+								"1a9d5674-23c5-4557-b97d-4c838f645a10"
 							]
 						}
 					},

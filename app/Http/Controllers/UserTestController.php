@@ -34,11 +34,15 @@ class UserTestController extends Controller
             ->where('peserta.no_reg', $nik)
             ->first();
         if ($get_peserta != null) {
-            $token = Hash::make($get_peserta['nik'] . '-' . $get_peserta['kode']);
-            HasilSoal::where('id', $get_peserta['id'])->update(['token' => $token]);
-            $res = $this->responses(true, "login berhasil", ["token" => $token]);
+            if ($get_peserta['kode'] != $kode) {
+                $res = $this->responses(false, "password yang dimasukan salah");
+            }else{
+                $token = Hash::make($get_peserta['nik'] . $get_peserta['kode']);
+                HasilSoal::where('id', $get_peserta['id'])->update(['token' => $token]);
+                $res = $this->responses(true, "login berhasil", ["token" => $token]);
+            }
         } else {
-            $res = $this->responses(false, "invalid username or password");
+            $res = $this->responses(false, "NIK tidak terdaftar");
         }
         return response()->json($res);
     }
@@ -67,7 +71,7 @@ class UserTestController extends Controller
         return response()->json($res);
     }
 
-    public function profile(Request $request): JsonResponse
+    public function profile($token): JsonResponse
     {
         $profile = HasilSoal::join('peserta', 'hasil_test.id_peserta', '=', 'peserta.id')
             ->select(
@@ -82,8 +86,8 @@ class UserTestController extends Controller
                 'peserta.alamat as alamat',
                 'peserta.role_kelas as role_kelas',
                 'peserta.jenis_peserta as jenis_peserta',
-                )
-            ->where('hasil_test.token', $request->input('token'))
+            )
+            ->where('hasil_test.token', $token)
             ->first();
         if ($profile != null) {
             $jenis_peserta = RolePeserta::where('id', $profile['jenis_peserta'])->first();
