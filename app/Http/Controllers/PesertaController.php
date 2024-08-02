@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peserta;
 use App\Models\MediaUpload;
 use App\Models\HasilSoal;
+use App\Models\Test;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -165,12 +166,14 @@ class PesertaController extends Controller
             $res = $this->responses(false, 'peserta tidak ditemukan');
         }
         
-        $kode_soal = $this->generate_code();
         $test = $request->input("id_test");
+        $kode_soal = $this->get_code($test);
+
         $data = [
             "id_peserta" => $id_peserta,
             "id_test" => $test,
-            "kode_soal" => $kode_soal
+            "kode_soal" => $kode_soal,
+            "tgl_daftar" => date('Y-m-d')
         ];
         $create = HasilSoal::create($data);
         if($create){
@@ -202,6 +205,9 @@ class PesertaController extends Controller
                             'test.jenis_test',
                             'hasil_test.id as id_test',
                             'hasil_test.kode_soal',
+                            'hasil_test.tgl_daftar',
+                            'hasil_test.tgl_test',
+                            'hasil_test.status_test',
                             'hasil_test.listening',
                             'hasil_test.structure',
                             'hasil_test.reading'
@@ -212,40 +218,6 @@ class PesertaController extends Controller
             $res = $this->responses(true, 'menampilkan data berdasarkan num test:'.$id_test, $data_bytest);
         }else{
             $res = $this->responses(false, 'empty data');
-        }
-        return response()->json($res);
-    }
-
-    public function upload_photo(Request $request, $id_peserta):JsonResponse{
-        $data_peserta = Peserta::where('id', $id_peserta)->get();
-        if(count($data_peserta) > 0){
-            $this->validate($request,[
-                'image' => 'required|mimes:jpg,jpeg,gif,png|max:4096'
-            ]);
-            $file = $request->file('image');
-            
-            $filename = uniqid().'-'.$data_peserta[0]->no_reg.'.'.$file->getClientOriginalExtension();
-            $path = 'profile_picture';
-            $up_data = [
-                "name_file" => $filename,
-                "path" => $path.'/'.$filename,
-                "jenis_file" => 'images'
-            ];
-            $file->move(storage_path($path), $filename);
-            try {
-                MediaUpload::create($up_data);
-                $get_id_file = MediaUpload::select('id', 'name_file')->where('name_file', $filename)->first();
-                Peserta::where('id', $data_peserta[0]->id)
-                ->update([
-                    'profile_picture' => $get_id_file->id
-                ]);
-                
-                $res = $this->responses(true, 'upload successfully', $up_data);
-            } catch (\Throwable $th) {
-                $res = $this->responses(false, 'error'.$th);
-            }
-        }else{
-            $res = $this->responses(false, 'user tidak ditemukan');
         }
         return response()->json($res);
     }
@@ -265,5 +237,12 @@ class PesertaController extends Controller
             $randomString.= $characters[rand(0, strlen($characters) - 1)];
         }
         return $randomString;
+    }
+
+    protected function get_code($test){
+        $get_test = Test::select('id', 'kode')->where('id', $test)->first();
+        $get_date = date('dmY');
+        $kode_soal = $get_test->kode.'-'. $get_date;
+        return $kode_soal;
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\Peserta;
 use App\Models\JenisKelas;
 use App\Models\RolePeserta;
 use App\Models\HasilSoal;
@@ -39,7 +38,7 @@ class UserTestController extends Controller
             }else{
                 $token = Hash::make($get_peserta['nik'] . $get_peserta['kode']);
                 HasilSoal::where('id', $get_peserta['id'])->update(['token' => $token]);
-                $res = $this->responses(true, "login berhasil", ["token" => $token]);
+                $res = $this->responses(true, "login berhasil", ["token" => $token, "id" => $get_peserta['id']]);
             }
         } else {
             $res = $this->responses(false, "NIK tidak terdaftar");
@@ -62,7 +61,14 @@ class UserTestController extends Controller
 
     public function hasil($id): JsonResponse
     {
-        $detail = HasilSoal::where('id', $id)->first();
+        $detail = HasilSoal::join('peserta', 'hasil_test.id_peserta', '=', 'peserta.id')
+                            ->select(
+                                'hasil_test.*',
+                                'peserta.id as id_peserta',
+                                'peserta.nama_peserta as nama_peserta'
+                            )
+                            ->where('hasil_test.id', $id)
+                            ->first();
         if ($detail != null) {
             $res = $this->responses(true, "get detail data nilai: " . $id, $detail);
         } else {

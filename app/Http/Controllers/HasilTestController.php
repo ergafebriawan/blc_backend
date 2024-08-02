@@ -37,6 +37,17 @@ class HasilTestController extends Controller
         return response()->json($res);
     }
 
+    public function cancel($id):JsonResponse{
+        $hasil = HasilSoal::where('id', $id)->first();
+        if($hasil!= null){
+            $hasil->delete();
+            $res = $this->responses(true, "hapus data: ".$id);
+        }else{
+            $res = $this->responses(false, "data not found");
+        }
+        return response()->json($res);
+    }
+
     protected function responses($success, $message, $data = null){
         return [
             "success" => $success,

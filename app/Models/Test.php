@@ -35,6 +35,7 @@ class Test extends Model
      */
     protected $fillable = [
         'jenis_test', 
+        'kode',
         'status'
     ];
 }

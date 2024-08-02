@@ -16,6 +16,7 @@ class CreateTestTable extends Migration
         Schema::create('test', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('jenis_test', 200);
+            $table->char('kode', 5);
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

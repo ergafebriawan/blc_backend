@@ -16,21 +16,25 @@ class TestSeeder extends Seeder
     {
         Test::create([
             'jenis_test' => 'pre test',
+            'kode' => 'PRT',
             'status' => false
         ]);
 
         Test::create([
             'jenis_test' => 'post test 1',
+            'kode' => 'PT1',
             'status' => false
         ]);
 
         Test::create([
             'jenis_test' => 'post test 2',
+            'kode' => 'PT2',
             'status' => false
         ]);
 
         Test::create([
             'jenis_test' => 'equivalent',
+            'kode' => 'EQV',
             'status' => false
         ]);
     }

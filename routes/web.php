@@ -34,6 +34,9 @@ $router->group(
     function ($router){
         $router->get('/', 'AdminController@index');
         $router->get('/{id}', 'AdminController@detail');
+        $router->post('/', 'AdminController@store');
+        $router->put('/{id}', 'AdminController@update_password');
+        $router->delete('/{id}', 'AdminController@delete');
     }
 );
 
@@ -57,12 +60,14 @@ $router->group([
     $router->post('/', 'PesertaController@create');
     $router->get('/{id}', 'PesertaController@detail');
     $router->put('/{id}', 'PesertaController@update');
-    $router->delete('/{id}', 'PesertaController@delete');
     $router->post('/active/{id_peserta}','PesertaController@active_test');
+    $router->delete('/{id}', 'PesertaController@delete');
     $router->get('/by-test/{id_test}','PesertaController@show_by_test');
     $router->post('/upload_photo/{id_peserta}', 'MediaController@upload_photo');
     $router->get('/filter/{params}','PesertaController@filter');
     $router->get('/generate_kode/{id_peserta}/{id_test}','PesertaController@generate_kode');
+
+    $router->delete('/test/{id}', 'HasilTestController@cancel');
 });
 
 //test
@@ -106,4 +111,6 @@ $router->group([
     $router->post('/logout', 'UserTestController@logout_peserta');
     $router->get('/result/{id}', 'UserTestController@hasil');
     $router->post('/profile/{token}', 'UserTestController@profile');
+    $router->get('/soal/{jenis}', 'SoalController@get_soal');
+    $router->get('/test', 'TestController@index');
 });

@@ -35,7 +35,8 @@ class Admin extends Model implements AuthenticatableContract, AuthorizableContra
     }
 
     protected $fillable = [
-        'username'
+        'username',
+        'password'
     ];
     protected $hidden = [
         'password',

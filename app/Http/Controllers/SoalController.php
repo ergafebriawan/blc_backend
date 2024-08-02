@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisSoal;
 use App\Models\MediaUpload;
 use App\Models\Soal;
 use Illuminate\Http\JsonResponse;
@@ -13,7 +14,14 @@ class SoalController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware(
+            'auth:api', 
+            [
+                'except' => [
+                    'get_soal'
+                ]
+            ]
+        );
     }
 
     public function get_soal($jenis): JsonResponse
@@ -57,7 +65,7 @@ class SoalController extends Controller
     public function create(Request $request): JsonResponse
     {
         $jenis_soal = $request->input("type_soal");
-        $data_jenis_soal = DB::table('jenis_soal')->select('type_soal')->where('id', $jenis_soal)->first();
+        $data_jenis_soal = JenisSoal::select('type_soal')->where('id', $jenis_soal)->first()->type_soal;
         $val_index = $this->get_index($request->input('type_test'));
         $data = [
             "index" => $val_index,
@@ -72,14 +80,14 @@ class SoalController extends Controller
         ];
         $result_data = [];
 
-        if ($data_jenis_soal->type_soal === "blank" || $data_jenis_soal->type_soal == "question") {
+        if ($data_jenis_soal === "blank" || $data_jenis_soal == "question") {
             $result_data = $data;
-        } else if ($data_jenis_soal->type_soal === "card") {
+        } else if ($data_jenis_soal === "card") {
             $content = [
                 "content" => $request->input('content')
             ];
             $result_data = $data + $content;
-        } else if ($data_jenis_soal->type_soal === "example" || $data_jenis_soal->type_soal === "test" || $data_jenis_soal->type_soal === "test1") {
+        } else if ($data_jenis_soal === "example" || $data_jenis_soal === "test" || $data_jenis_soal === "test1") {
             $content = [
                 "no" => $request->input('no'),
                 "a" => $request->input('a'),
@@ -89,7 +97,7 @@ class SoalController extends Controller
                 "key" => $request->input('key')
             ];
             $result_data = $data + $content;
-        } else if ($data_jenis_soal->type_soal === "paragraph") {
+        } else if ($data_jenis_soal === "paragraph") {
             $content = [
                 "paragraph_title" => $request->input('p_title'),
                 "paragraph" => $request->input('paragraph'),
@@ -112,10 +120,11 @@ class SoalController extends Controller
 
     public function update(Request $request, $id): JsonResponse
     {
-        $soal = Soal::where('id', $id)->get();
-        if (count($soal) > 0) {
-            $jenis_soal = $request->input("type");
-            $data_jenis_soal = DB::table('jenis_soal')->select('type_soal')->where('id', $jenis_soal)->first();
+        $soal = Soal::where('id', $id)->first();
+        if ($soal != null) {
+            $jenis_soal = $request->input("type_soal");
+            $data_jenis_soal = JenisSoal::select('type_soal')->where('id', $jenis_soal)->first()->type_soal;
+            // return response()->json($data_jenis_soal);
             $data = [
                 "index"         => $request->input('index'),
                 "type_test"     => $request->input('type_test'),

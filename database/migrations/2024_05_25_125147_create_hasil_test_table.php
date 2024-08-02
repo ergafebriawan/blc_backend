@@ -17,8 +17,11 @@ class CreateHasilTestTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('id_peserta');
             $table->uuid('id_test');
+            $table->date('tgl_daftar');
+            $table->date('tgl_test')->nullable();
             $table->string('kode_soal', 255);
             $table->string('token', 255)->nullable();
+            $table->boolean('status_test')->default(false);
             $table->integer('listening')->nullable();
             $table->integer('structure')->nullable();
             $table->integer('reading')->nullable();
