@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             RolePesertaSeeder::class,
             TestSeeder::class,
             PesertaSeeder::class,
-            SoalSeeder::class
+            PreTestSeeder::class
         ]);
     }
 }

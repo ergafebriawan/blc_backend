@@ -63,6 +63,7 @@ $router->group([
     $router->post('/active/{id_peserta}','PesertaController@active_test');
     $router->delete('/{id}', 'PesertaController@delete');
     $router->get('/by-test/{id_test}','PesertaController@show_by_test');
+    $router->get('/by-hasil/{id_test}','PesertaController@show_by_hasil');
     $router->post('/upload_photo/{id_peserta}', 'MediaController@upload_photo');
     $router->get('/filter/{params}','PesertaController@filter');
     $router->get('/generate_kode/{id_peserta}/{id_test}','PesertaController@generate_kode');

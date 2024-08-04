@@ -165,6 +165,142 @@ class SoalSeeder extends Seeder
             "d" => "Innovations in manufacturing",
             "key" => "c"
         ]);
+
+        //blank
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('blank'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '',
+            "title" => '',
+            "subtitle" => '',
+            "timer" => 0
+        ]);
+
+        //card
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('card'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '-',
+            "title" => '',
+            "subtitle" => '',
+            "content" => "",
+            "timer" => 60
+        ]);
+
+        //example
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('example'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '',
+            "title" => '',
+            "subtitle" => '',
+            "timer" => 0,
+            "no" => '',
+            "a" => '',
+            "b" => '',
+            "c" => '',
+            "d" => '',
+            "key" => ''
+        ]);
+
+        //test
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('test'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '',
+            "title" => '',
+            "subtitle" => '',
+            "no" => "",
+            "a" => "",
+            "b" => "",
+            "c" => "",
+            "d" => "",
+            "key" => "",
+            "timer" => 0
+        ]);
+
+        //test1
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('test1'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '',
+            "title" => "",
+            "subtitle" => "",
+            "no" => "",
+            "a" => "",
+            "b" => "",
+            "c" => "",
+            "d" => "",
+            "key" => "",
+            "timer" => 0
+        ]);
+
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('test1'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '',
+            "title" => "",
+            "subtitle" => "",
+            "no" => "",
+            "a" => "",
+            "b" => "",
+            "c" => "",
+            "d" => "",
+            "key" => "",
+            "timer" => 0
+        ]);
+
+        //question
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('question'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '',
+            "title" => '',
+            "subtitle" => '',
+            "timer" => 0
+        ]);
+
+        //paragraph
+        Soal::create([
+            "index" => 0,
+            "type_test" => $this->get_jenis_test('pre test'),
+            "type_soal" => $this->get_jenis_soal('paragraph'),
+            "test" => '',
+            "page_title" => '',
+            "page_subtitle" => '',
+            "title" => "",
+            "subtitle" => "",
+            "paragraph_title" => "",
+            "paragraph" => "",
+            "no" => "7",
+            "a" => "",
+            "b" => "",
+            "c" => "",
+            "d" => "",
+            "key" => "",
+            "timer" => 0
+        ]);
     }
 
     protected function get_jenis_soal($soal)
