@@ -114,4 +114,5 @@ $router->group([
     $router->post('/profile/{token}', 'UserTestController@profile');
     $router->get('/soal/{jenis}', 'SoalController@get_soal');
     $router->get('/test', 'TestController@index');
+    $router->post('/send_score/{id}', 'HasilTestController@hasil');
 });

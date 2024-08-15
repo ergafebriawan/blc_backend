@@ -64,8 +64,15 @@ class UserTestController extends Controller
         $detail = HasilSoal::join('peserta', 'hasil_test.id_peserta', '=', 'peserta.id')
                             ->select(
                                 'hasil_test.*',
+                                'peserta.no_reg',
                                 'peserta.id as id_peserta',
-                                'peserta.nama_peserta as nama_peserta'
+                                'peserta.nama_peserta as nama_peserta',
+                                'peserta.email',
+                                'peserta.no_hp',
+                                'peserta.gender',
+                                'peserta.tgl_lahir',
+                                'peserta.instansi',
+                                'peserta.alamat',
                             )
                             ->where('hasil_test.id', $id)
                             ->first();

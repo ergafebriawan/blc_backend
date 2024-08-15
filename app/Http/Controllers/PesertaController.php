@@ -217,8 +217,11 @@ class PesertaController extends Controller
                 'hasil_test.tgl_test',
                 'hasil_test.status_test',
                 'hasil_test.listening',
+                'hasil_test.k_listening',
                 'hasil_test.structure',
+                'hasil_test.k_structure',
                 'hasil_test.reading',
+                'hasil_test.k_reading',
                 'hasil_test.total'
             )
             ->where('test.id', $id_test)

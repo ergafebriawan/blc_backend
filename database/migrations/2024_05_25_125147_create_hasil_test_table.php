@@ -23,8 +23,11 @@ class CreateHasilTestTable extends Migration
             $table->string('token', 255)->nullable();
             $table->boolean('status_test')->default(false);
             $table->integer('listening')->nullable();
+            $table->integer('k_listening')->nullable();
             $table->integer('structure')->nullable();
+            $table->integer('k_structure')->nullable();
             $table->integer('reading')->nullable();
+            $table->integer('k_reading')->nullable();
             $table->integer('total')->nullable();
             $table->timestamps();
 

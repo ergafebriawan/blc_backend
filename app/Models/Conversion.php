@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class HasilSoal extends Model
+class Conversion extends Model
 {
-    protected $table = 'hasil_test';
+    protected $table = 'conversion';
 
     protected static function boot(){
         parent::boot();
@@ -34,19 +34,8 @@ class HasilSoal extends Model
      * @var string[]
      */
     protected $fillable = [
-        'id_peserta',
-        'id_test',
-        'kode_soal',
-        'tgl_daftar',
-        'tgl_test',
-        'token', 
-        'status_test',
-        'listening',
-        'k_listening',
-        'structure',
-        'k_structure',
-        'reading',
-        'k_reading',
-        'total'
+        'type',
+        'value',
+        'conversion'
     ];
 }
