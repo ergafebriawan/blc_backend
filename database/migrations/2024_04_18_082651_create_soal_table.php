@@ -32,7 +32,7 @@ class CreateSoalTable extends Migration
             $table->text('c')->nullable();
             $table->text('d')->nullable();
             $table->string('key', 10)->nullable();
-            $table->integer('timer')->default(0);
+            $table->integer('timer')->nullable();
             $table->uuid('audio')->nullable();
             $table->timestamps();
 

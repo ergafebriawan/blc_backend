@@ -25,8 +25,7 @@ class TestingSoalSeeder extends Seeder
             "page_title" => 'LISTENING',
             "page_subtitle" => 'COMPREHENSION',
             "title" => '-',
-            "subtitle" => '-',
-            "timer" => 0
+            "subtitle" => '-'
         ]);
 
         Soal::create([
@@ -38,8 +37,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => '-',
             "title" => 'PART A',
             "subtitle" => 'DIRECTIONS',
-            "content" => "A In Part ABX, you will hear short conversations between two people. After each conversation, you will hear a question about the conversation. The conversations and questions will not be repeated. <br><br>After you hear a question, read the four possible answers and choose the best answer.",
-            "timer" => 0
+            "content" => "A In Part ABX, you will hear short conversations between two people. After each conversation, you will hear a question about the conversation. The conversations and questions will not be repeated. <br><br>After you hear a question, read the four possible answers and choose the best answer."
         ]);
 
         Soal::create([
@@ -51,7 +49,6 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => 'EXAMPLE',
             "title" => '-',
             "subtitle" => 'You learn from the conversation that neither the man nor the woman likes the painting. The best answer to the question \u201cWhat does the man mean?\u201d is (A), \u201cHe doesn\u2019t like the painting either.\u201d Therefore, the correct choice is (A).',
-            "timer" => 0,
             "no" => '0',
             "a" => 'He does not like the painting either.',
             "b" => 'He does not know how to paint.',
@@ -69,8 +66,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => 'SECTION 1',
             "title" => 'PART A',
             "subtitle" => 'START',
-            "content" => "-",
-            "timer" => 0
+            "content" => "-"
         ]);
 
         Soal::create([
@@ -154,8 +150,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => '-',
             "title" => 'PART A',
             "subtitle" => 'THE END',
-            "content" => "-",
-            "timer" => 0
+            "content" => "-"
         ]);
 
         Soal::create([
@@ -167,8 +162,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => '-',
             "title" => 'PART B',
             "subtitle" => 'DIRECTIONS',
-            "content" => "In this part of the test, you will hear longer conversations. After each conversation, you will hear several questions. The conversations and questions will not be repeated. <br><br> After you hear a question, read the four possible answers in your book and choose the best answer.",
-            "timer" => 0
+            "content" => "In this part of the test, you will hear longer conversations. After each conversation, you will hear several questions. The conversations and questions will not be repeated. <br><br> After you hear a question, read the four possible answers in your book and choose the best answer."
         ]);
 
         Soal::create([
@@ -180,8 +174,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => '-',
             "title" => 'PART B',
             "subtitle" => 'START',
-            "content" => "-",
-            "timer" => 0
+            "content" => "-"
         ]);
 
         Soal::create([
@@ -192,8 +185,7 @@ class TestingSoalSeeder extends Seeder
             "page_title" => 'LISTENING',
             "page_subtitle" => 'PART B',
             "title" => 'QUESTION 31 - 34',
-            "subtitle" => '-',
-            "timer" => 0
+            "subtitle" => '-'
         ]);
 
         Soal::create([
@@ -278,8 +270,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => 'COMPREHENSION',
             "title" => 'PART B',
             "subtitle" => 'THE END',
-            "content" => "-",
-            "timer" => 0
+            "content" => "-"
         ]);
 
         Soal::create([
@@ -291,8 +282,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => 'COMPREHENSION',
             "title" => 'PART B',
             "subtitle" => 'DIRECTIONS',
-            "content" => "In this part of the test, you will hear several short talks. After each talk, you will hear some questions. The talks and questions will not be repeated. <br><br> After you hear a question, read the four possible answers in your book and choose the best answer.",
-            "timer" => 0
+            "content" => "In this part of the test, you will hear several short talks. After each talk, you will hear some questions. The talks and questions will not be repeated. <br><br> After you hear a question, read the four possible answers in your book and choose the best answer."
         ]);
 
         Soal::create([
@@ -309,8 +299,7 @@ class TestingSoalSeeder extends Seeder
             "b" => "To discuss the possibility of an economic depression",
             "c" => "To explain the workings of the brain",
             "d" => "To dramatize a famous mystery story",
-            "key" => "c",
-            "timer" => 0
+            "key" => "c"
         ]);
 
         Soal::create([
@@ -327,8 +316,7 @@ class TestingSoalSeeder extends Seeder
             "b" => "It will never be shown again.",
             "c" => "It can help viewers improve their memory skills.",
             "d" => "It will help with course work.",
-            "key" => "d",
-            "timer" => 0
+            "key" => "d"
         ]);
 
         Soal::create([
@@ -340,8 +328,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => 'COMPREHENSION',
             "title" => 'PART C',
             "subtitle" => 'START',
-            "content" => "-",
-            "timer" => 0
+            "content" => "-"
         ]);
 
         Soal::create([
@@ -352,8 +339,7 @@ class TestingSoalSeeder extends Seeder
             "page_title" => 'LISTENING',
             "page_subtitle" => 'PART C',
             "title" => 'QUESTION 38 - 41',
-            "subtitle" => '-',
-            "timer" => 0
+            "subtitle" => '-'
         ]);
 
         Soal::create([
@@ -436,8 +422,7 @@ class TestingSoalSeeder extends Seeder
             "page_title" => 'LISTENING',
             "page_subtitle" => 'THE END',
             "title" => '-',
-            "subtitle" => '-',
-            "timer" => 0
+            "subtitle" => '-'
         ]);
 
         Soal::create([
@@ -497,8 +482,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => '-',
             "title" => 'START',
             "subtitle" => 'Now begin work on the questions',
-            "content" => "-",
-            "timer" => 0
+            "content" => "-"
         ]);
 
         Soal::create([
@@ -689,8 +673,7 @@ class TestingSoalSeeder extends Seeder
             "page_title" => 'STRUCTURE',
             "page_subtitle" => 'THE END',
             "title" => '-',
-            "subtitle" => '-',
-            "timer" => 0
+            "subtitle" => '-'
         ]);
 
         Soal::create([
@@ -702,8 +685,7 @@ class TestingSoalSeeder extends Seeder
             "page_subtitle" => 'DIRECTIONS',
             "title" => '-',
             "subtitle" => '-',
-            "content" => "In this section you will read several passages. Each passage is followed by several questions about it. For questions 1-50, you are to choose the one best answer, (A), (B), (C) or (D), to each question. <br><br> Answer all questions following a passage on the basis of what is stated or implied in the passage.",
-            "timer" => 0
+            "content" => "In this section you will read several passages. Each passage is followed by several questions about it. For questions 1-50, you are to choose the one best answer, (A), (B), (C) or (D), to each question. <br><br> Answer all questions following a passage on the basis of what is stated or implied in the passage."
         ]);
 
         Soal::create([
@@ -746,8 +728,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "An accepted way of measuring time is essential for the smooth functioningof society.",
             "d" => "Society judges people by the times at which they conduct certain activities.",
             "key" => "c",
-            "no" => "0",
-            "timer" => 0
+            "no" => "0"
         ]);
 
         Soal::create([
@@ -790,8 +771,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "The railroad\u2019s reliance on time schedules",
             "d" => "People\u2019s agreement on the measurement of time",
             "key" => "d",
-            "no" => "0",
-            "timer" => 0
+            "no" => "0"
         ]);
 
         Soal::create([
@@ -803,8 +783,7 @@ opportunities, particularly limited educational and vocational options.",
             "page_subtitle" => 'COMPREHENSION',
             "title" => 'START',
             "subtitle" => 'Now begin work on the questions',
-            "content" => "-",
-            "timer" => 0
+            "content" => "-"
         ]);
 
         Soal::create([
@@ -891,8 +870,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Changes in settlement patterns between farms and cities",
             "d" => "The effects of mechanization on western migration",
             "key" => "c",
-            "no" => "1",
-            "timer" => 0
+            "no" => "1"
         ]);
 
         Soal::create([
@@ -935,8 +913,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Population ",
             "d" => "Labor",
             "key" => "b",
-            "no" => "2",
-            "timer" => 0
+            "no" => "2"
         ]);
 
         Soal::create([
@@ -979,8 +956,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Gave away",
             "d" => "Gradually reduced the size of",
             "key" => "a",
-            "no" => "3",
-            "timer" => 0
+            "no" => "3"
         ]);
 
         Soal::create([
@@ -1023,8 +999,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "To suggest that the migration would have happened despite the economic situation",
             "d" => "To argue against economics as the primary factor in migration",
             "key" => "c",
-            "no" => "4",
-            "timer" => 0
+            "no" => "4"
         ]);
 
         Soal::create([
@@ -1067,8 +1042,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Young farm men starting to work",
             "d" => "People who had few opportunities in cities",
             "key" => "b",
-            "no" => "5",
-            "timer" => 0
+            "no" => "5"
         ]);
 
         Soal::create([
@@ -1111,8 +1085,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Unavoidably",
             "d" => "Possibly",
             "key" => "c",
-            "no" => "6",
-            "timer" => 0
+            "no" => "6"
         ]);
 
         Soal::create([
@@ -1155,8 +1128,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "The loss of rural population",
             "d" => "Innovations in manufacturing",
             "key" => "c",
-            "no" => "7",
-            "timer" => 0
+            "no" => "7"
         ]);
 
         Soal::create([
@@ -1199,8 +1171,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Rural areas of the West became more populated than those in the central part of the country",
             "d" => "Work opportunities in urban areas began to decline.",
             "key" => "a",
-            "no" => "8",
-            "timer" => 0
+            "no" => "8"
         ]);
 
         Soal::create([
@@ -1243,8 +1214,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Young women who migrated generally had more education.",
             "d" => "Young women generally moved more frequently from one rural area to another.",
             "key" => "a",
-            "no" => "9",
-            "timer" => 0
+            "no" => "9"
         ]);
 
         Soal::create([
@@ -1287,8 +1257,7 @@ opportunities, particularly limited educational and vocational options.",
             "c" => "Low-paying",
             "d" => "Disappearing",
             "key" => "b",
-            "no" => "10",
-            "timer" => 0
+            "no" => "10"
         ]);
 
         Soal::create([
@@ -1300,8 +1269,7 @@ opportunities, particularly limited educational and vocational options.",
             "page_subtitle" => '',
             "title" => 'THANK YOU',
             "subtitle" => 'THE END',
-            "content" => "Info pendaftaran TOEFL ITP RUTIN <br>http:\/\/blc.ub.ac.id\/tata-cara-itp-rutin-byop-bring-your-own-proctor\/",
-            "timer" => 0
+            "content" => "Info pendaftaran TOEFL ITP RUTIN <br>http:\/\/blc.ub.ac.id\/tata-cara-itp-rutin-byop-bring-your-own-proctor\/"
         ]);
     }
 
