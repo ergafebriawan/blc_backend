@@ -160,6 +160,12 @@ class PesertaController extends Controller
         }
     }
 
+    public function import_peserta(Request $request){
+        return response()->json(
+            $this->responses(true, 'berhasil menambahkan data'), 
+            Response::HTTP_CREATED);
+    }
+
     public function filter($params): JsonResponse
     {
 

@@ -31,7 +31,7 @@ $router->get('/', function () use ($router) {
 //admin
 $router->group(
     ['prefix' => 'admin'],
-    function ($router){
+    function ($router) {
         $router->get('/', 'AdminController@index');
         $router->get('/{id}', 'AdminController@detail');
         $router->post('/', 'AdminController@store');
@@ -43,7 +43,7 @@ $router->group(
 //soal
 $router->group([
     'prefix' => 'soal'
-],function($router){
+], function ($router) {
     $router->post('/', 'SoalController@create');
     $router->get('/{jenis}', 'SoalController@get_soal');
     $router->get('/detail/{id}', 'SoalController@detail_soal');
@@ -55,26 +55,26 @@ $router->group([
 //peserta
 $router->group([
     'prefix' => 'peserta',
-], function ($router){
+], function ($router) {
     $router->get('/', 'PesertaController@index');
     $router->post('/', 'PesertaController@create');
     $router->get('/{id}', 'PesertaController@detail');
     $router->put('/{id}', 'PesertaController@update');
-    $router->post('/active/{id_peserta}','PesertaController@active_test');
+    $router->post('/active/{id_peserta}', 'PesertaController@active_test');
     $router->delete('/{id}', 'PesertaController@delete');
-    $router->get('/by-test/{id_test}','PesertaController@show_by_test');
-    $router->get('/by-hasil/{id_test}','PesertaController@show_by_hasil');
+    $router->get('/by-test/{id_test}', 'PesertaController@show_by_test');
+    $router->get('/by-hasil/{id_test}', 'PesertaController@show_by_hasil');
     $router->post('/upload_photo/{id_peserta}', 'MediaController@upload_photo');
-    $router->get('/filter/{params}','PesertaController@filter');
-    $router->get('/generate_kode/{id_peserta}/{id_test}','PesertaController@generate_kode');
-
+    $router->get('/filter/{params}', 'PesertaController@filter');
+    $router->get('/generate_kode/{id_peserta}/{id_test}', 'PesertaController@generate_kode');
     $router->delete('/test/{id}', 'HasilTestController@cancel');
+    $router->post('/import', 'PesertaController@import_peserta');
 });
 
 //test
 $router->group([
     'prefix' => 'test'
-], function ($router){
+], function ($router) {
     $router->get('/', 'TestController@index');
     $router->get('/{id}', 'TestController@detail');
     $router->get('/update/{id}', 'TestController@update');
@@ -83,7 +83,7 @@ $router->group([
 //auth admin
 $router->group([
     'prefix' => 'auth'
-], function ($router) { 
+], function ($router) {
     $router->post('/login/admin', 'AuthController@login_admin');
     $router->post('/logout/admin', 'AuthController@logout_admin');
     $router->post('/refresh/admin', 'AuthController@refresh');
@@ -100,14 +100,14 @@ $router->get('/jenis_soal', 'OptionController@jenis_soal');
 //auth hasil peserta
 $router->group([
     'prefix' => 'hasil'
-],function ($router){
+], function ($router) {
     $router->get('/{id_peserta}/{id_soal}', 'HasilTestController@index');
 });
 
 ////API for peserta
 $router->group([
     'prefix' => 'user'
-], function($router){
+], function ($router) {
     $router->post('/login', 'UserTestController@login_peserta');
     $router->post('/logout', 'UserTestController@logout_peserta');
     $router->get('/result/{id}', 'UserTestController@hasil');

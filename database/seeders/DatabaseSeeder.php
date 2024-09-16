@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
             RolePesertaSeeder::class,
             TestSeeder::class,
             PesertaSeeder::class,
-            PreTestSeeder::class,
             konvListeningSeeder::class,
             konvStructureSeeder::class,
-            konvReadingSeeder::class
+            konvReadingSeeder::class,
+            TestingSoalSeeder::class
         ]);
     }
 }
