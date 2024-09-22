@@ -166,7 +166,7 @@
 					"response": []
 				},
 				{
-					"name": "active test",
+					"name": "active test peserta",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -190,14 +190,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/peserta/active/b3711df7-c55e-4a2a-896c-21a834ff4bc1",
+							"raw": "{{baseURL}}/peserta/active/9df1640b-d048-4f0b-b013-defa1df74eef",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"peserta",
 								"active",
-								"b3711df7-c55e-4a2a-896c-21a834ff4bc1"
+								"9df1640b-d048-4f0b-b013-defa1df74eef"
 							]
 						}
 					},
@@ -300,6 +300,138 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "cancel test peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/peserta/test/578b1302-8258-434c-ab57-229140d33a4d",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"test",
+								"578b1302-8258-434c-ab57-229140d33a4d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "active test peserta lebih dari 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_test\": \"{{pre_test}}\",\r\n    \"peserta\": [\"1\", \"2\", \"3\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/peserta/more-active",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"more-active"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "download template import peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/peserta/download-template-import-peserta",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"download-template-import-peserta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "import peserta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file_excel",
+									"type": "file",
+									"src": "/C:/Users/user/Downloads/template_import_peserta.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/peserta/import-peserta",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"peserta",
+								"import-peserta"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -309,10 +441,35 @@
 				{
 					"name": "add admin",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"perompak\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "{{baseURL}}/admin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"admin"
+							]
 						}
 					},
 					"response": []
@@ -325,7 +482,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXV0aFwvbG9naW5cL2FkbWluIiwiaWF0IjoxNzEyNjI5MTUwLCJleHAiOjE3MTI2MzI3NTAsIm5iZiI6MTcxMjYyOTE1MCwianRpIjoiT3VJSkxaYmNsbG44YVJrNyIsInN1YiI6MSwicHJ2IjoiZGY4ODNkYjk3YmQwNWVmOGZmODUwODJkNjg2YzQ1ZTgzMmU1OTNhOSJ9.htfazJ4kIYORA3SdZ5eud84A-tBD08bnorjqBVirEQk",
+									"value": "{{authToken}}",
 									"type": "string"
 								}
 							]
@@ -333,14 +490,77 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/admin",
-							"protocol": "http",
+							"raw": "{{baseURL}}/admin",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8000",
 							"path": [
 								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"new_password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/admin/9a5c699a-b5f6-4e7c-9507-f65c9720347b",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"admin",
+								"9a5c699a-b5f6-4e7c-9507-f65c9720347b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/admin/9a5c699a-b5f6-4e7c-9507-f65c9720347b",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"admin",
+								"9a5c699a-b5f6-4e7c-9507-f65c9720347b"
 							]
 						}
 					},
@@ -675,14 +895,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/test/update/08fb646c-591c-4efa-9604-1de18bdbe7e2",
+							"raw": "{{baseURL}}/test/update/{{pre_test}}",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"test",
 								"update",
-								"08fb646c-591c-4efa-9604-1de18bdbe7e2"
+								"{{pre_test}}"
 							]
 						}
 					},
@@ -758,7 +978,7 @@
 					"response": []
 				},
 				{
-					"name": "create soal - blank Copy",
+					"name": "update soal - blank",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -774,7 +994,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{blank}}\",\r\n    \"index\": 1,\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"COMPREHENSION\",\r\n    \"title\": \"listening\",\r\n    \"subtitle\": \"COMPREHENSION\",\r\n    \"timer\": 30\r\n}",
+							"raw": "{\r\n    \"type_test\": \"{{pre_test}}\",\r\n    \"type_soal\": \"{{blank}}\",\r\n    \"index\": 1,\r\n    \"test\": \"listening\",\r\n    \"page_title\": \"LISTENING\",\r\n    \"page_subtitle\": \"COMPREHENSION\",\r\n    \"title\": \"listening\",\r\n    \"subtitle\": \"COMPREHENSION\",\r\n    \"timer\": 60\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -782,13 +1002,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/soal/64877aed-bf1f-461b-b284-9887ac23242d",
+							"raw": "{{baseURL}}/soal/200477aa-7cb1-422f-b131-5d01ddbac0b4",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"soal",
-								"64877aed-bf1f-461b-b284-9887ac23242d"
+								"200477aa-7cb1-422f-b131-5d01ddbac0b4"
 							]
 						}
 					},

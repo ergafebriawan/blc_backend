@@ -24,7 +24,11 @@ use Laravel\Lumen\Routing\Router;
 */
 
 $router->get('/', function () use ($router) {
-    return "BLC Toelf API";
+    return response()->json([
+       'message' => 'Welcome to BLC Toelf API',
+       'version' => '1.0',
+       'author' => 'Fusionx Project'
+    ]);
 });
 
 ////API for admin
@@ -68,7 +72,9 @@ $router->group([
     $router->get('/filter/{params}', 'PesertaController@filter');
     $router->get('/generate_kode/{id_peserta}/{id_test}', 'PesertaController@generate_kode');
     $router->delete('/test/{id}', 'HasilTestController@cancel');
-    $router->post('/import', 'PesertaController@import_peserta');
+    $router->post('/import-peserta', 'PesertaController@import_peserta');
+    $router->get('/download-template-import-peserta', 'PesertaController@download_template');
+    $router->post('/more-active', 'PesertaController@more_active');
 });
 
 //test

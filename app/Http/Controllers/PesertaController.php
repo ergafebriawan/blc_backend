@@ -9,13 +9,15 @@ use App\Models\Test;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
+use App\Models\JenisKelas;
+use App\Models\RolePeserta;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class PesertaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['download_template']]);
     }
 
     public function index(): JsonResponse
@@ -160,10 +162,89 @@ class PesertaController extends Controller
         }
     }
 
-    public function import_peserta(Request $request){
-        return response()->json(
-            $this->responses(true, 'berhasil menambahkan data'), 
-            Response::HTTP_CREATED);
+    public function import_peserta(Request $request):JsonResponse
+    {
+        $this->validate($request, [
+            'file_excel' => 'required|mimes:xls,xlsx'
+        ]);
+        $file = $request->file('file_excel');
+        $filename = $file->getClientOriginalName();
+        $file->move(storage_path('excel'), $filename);
+        try {
+
+            $reader = new Xlsx();
+            $spreadsheet = $reader->load(storage_path('excel/' . $filename));
+            $worksheet = $spreadsheet->getActiveSheet();
+
+            foreach ($worksheet->getRowIterator() as $row) {
+                $rowArray = [];
+                foreach ($row->getCellIterator() as $cell) {
+                    $rowArray[] = $cell->getValue();
+                }
+                if ($row->getRowIndex() > 1)
+                {
+                    $role_kelas = JenisKelas::select('id')->where('nama_kelas', $rowArray[2])->first();
+                    $jenis_peserta = RolePeserta::select('id')->where('nama_role', $rowArray[3])->first();
+                    Peserta::create([
+                        'no_reg' => $rowArray[1],
+                        'role_kelas' => $role_kelas->id,
+                        'jenis_peserta' => $jenis_peserta->id,
+                        'nama_peserta' => $rowArray[4],
+                        'email' => $rowArray[5],
+                        'no_hp' => $rowArray[6],
+                        'gender' => $rowArray[7],
+                        'tgl_lahir' => $rowArray[8],
+                        'instansi' => $rowArray[9],
+                        'alamat' => $rowArray[10]
+                    ]);
+                }
+            }
+            unlink(storage_path('excel/'.$filename));
+            return response()->json(
+                $this->responses(true, 'berhasil import data peserta'),
+                Response::HTTP_OK
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                $this->responses(false, 'gagal upload data peserta'),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+    public function download_template(Request $request)
+    {
+        $file = storage_path('template_file/template_import_peserta_TOELF.xlsx');
+        $header = array('Content-Type' => 'application/xlsx');
+        return response()->download($file, 'template_import_peserta.xlsx', $header);
+    }
+
+    public function more_active(Request $request): JsonResponse
+    {
+        $id_test = $request->input('id_test');
+        $peserta = request()->input('peserta');
+        $kode = $this->get_code($id_test);
+
+        try {
+            for ($i = 0; $i < count($peserta); $i++) {
+                $data = [
+                    "id_peserta" => $peserta[$i],
+                    "id_test" => $id_test,
+                    "kode_soal" => $kode,
+                    "tgl_daftar" => date('Y-m-d')
+                ];
+                HasilSoal::create($data);
+            }
+            return response()->json(
+                $this->responses(true, "berhasil menambahkan aktivasi test", $peserta[0]),
+                Response::HTTP_CREATED
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                $this->responses(false, 'gagal menambahkan activasi test'),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
     public function filter($params): JsonResponse

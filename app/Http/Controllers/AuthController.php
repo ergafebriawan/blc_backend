@@ -42,12 +42,12 @@ class AuthController extends Controller
 
         if (!$token = Auth::attempt($credentials)) {
             return response()->json(
-                $this->responses(false, 'password salah'),
+                $this->responses(false, 'admin atau password tidak valid'),
                 Response::HTTP_UNAUTHORIZED
             );
         }
 
-        $d = [
+        $data = [
             'access_token' => $token,
             'token_type' => 'bearer',
             'admin' => auth()->user(),
@@ -55,7 +55,7 @@ class AuthController extends Controller
         ];
 
         return response()->json(
-            $this->responses(true, 'login berhasil', $d),
+            $this->responses(true, 'login admin berhasil', $data),
             Response::HTTP_OK
         );
     }
@@ -71,7 +71,7 @@ class AuthController extends Controller
     public function me(): JsonResponse
     {
         return response()->json(
-            $this->responses(true, 'profile authentication admin', auth()->user()),
+            $this->responses(true, 'menampilkan profile admin', auth()->user()),
             Response::HTTP_OK
         );
     }
@@ -80,7 +80,7 @@ class AuthController extends Controller
     {
         auth()->logout();
         return response()->json(
-            $this->responses(true, 'berhasil logout'),
+            $this->responses(true, 'berhasil logout admin'),
             Response::HTTP_OK
         );
     }
