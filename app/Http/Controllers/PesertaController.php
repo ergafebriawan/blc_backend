@@ -182,7 +182,7 @@ class PesertaController extends Controller
             foreach ($row->getCellIterator() as $cell) {
                 $rowArray[] = $cell->getValue();
             }
-            if ($row->getRowIndex() > 1) {
+            if ($row->getRowIndex() > 1 && $rowArray[1] != null) {
                 $kelas = '';
                 $peserta = '';
                 if ($rowArray[2] == 'reguler') {
@@ -217,7 +217,7 @@ class PesertaController extends Controller
             }
         }
 
-        for ($i = 0; $i <= count($data_peserta)-1; $i++) {
+        for ($i = 0; $i < count($data_peserta); $i++) {
             $add = Peserta::create($data_peserta[$i]);
             if (!$add) {
                 return response()->json(
