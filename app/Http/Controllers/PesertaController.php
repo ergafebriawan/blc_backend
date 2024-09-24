@@ -162,7 +162,7 @@ class PesertaController extends Controller
         }
     }
 
-    public function import_peserta(Request $request):JsonResponse
+    public function import_peserta(Request $request): JsonResponse
     {
         $this->validate($request, [
             'file_excel' => 'required|mimes:xls,xlsx'
@@ -170,43 +170,72 @@ class PesertaController extends Controller
         $file = $request->file('file_excel');
         $filename = $file->getClientOriginalName();
         $file->move(storage_path('excel'), $filename);
-        try {
 
-            $reader = new Xlsx();
-            $spreadsheet = $reader->load(storage_path('excel/' . $filename));
-            $worksheet = $spreadsheet->getActiveSheet();
 
-            foreach ($worksheet->getRowIterator() as $row) {
-                $rowArray = [];
-                foreach ($row->getCellIterator() as $cell) {
-                    $rowArray[] = $cell->getValue();
-                }
-                if ($row->getRowIndex() > 1)
-                {
-                    $role_kelas = JenisKelas::select('id')->where('nama_kelas', $rowArray[2])->first();
-                    $jenis_peserta = RolePeserta::select('id')->where('nama_role', $rowArray[3])->first();
-                    Peserta::create([
-                        'no_reg' => $rowArray[1],
-                        'role_kelas' => $role_kelas->id,
-                        'jenis_peserta' => $jenis_peserta->id,
-                        'nama_peserta' => $rowArray[4],
-                        'email' => $rowArray[5],
-                        'no_hp' => $rowArray[6],
-                        'gender' => $rowArray[7],
-                        'tgl_lahir' => $rowArray[8],
-                        'instansi' => $rowArray[9],
-                        'alamat' => $rowArray[10]
-                    ]);
-                }
+        $reader = new Xlsx();
+        $spreadsheet = $reader->load(storage_path('excel/' . $filename));
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $data_peserta = [];
+        foreach ($worksheet->getRowIterator() as $row) {
+            $rowArray = [];
+            foreach ($row->getCellIterator() as $cell) {
+                $rowArray[] = $cell->getValue();
             }
-            unlink(storage_path('excel/'.$filename));
+            if ($row->getRowIndex() > 1) {
+                $kelas = '';
+                $peserta = '';
+                if ($rowArray[2] == 'reguler') {
+                    $role_kelas = JenisKelas::select('id')->where('nama_kelas', 'reguler')->first();
+                    $kelas = $role_kelas->id;
+                } else if ($rowArray[2] == 'private') {
+                    $role_kelas = JenisKelas::select('id')->where('nama_kelas', 'private')->first();
+                    $kelas = $role_kelas->id;
+                }
+
+                if ($rowArray[2] == 'reguler') {
+                    $jenis_peserta = RolePeserta::select('id')->where('nama_role', 'koordinator')->first();
+                    $peserta = $jenis_peserta->id;
+                } else if ($rowArray[2] == 'private') {
+                    $jenis_peserta = RolePeserta::select('id')->where('nama_role', 'anggota')->first();
+                    $peserta = $jenis_peserta->id;
+                }
+
+                $add_data = [
+                    'no_reg' => $rowArray[1],
+                    'role_kelas' => $kelas,
+                    'jenis_peserta' => $peserta,
+                    'nama_peserta' => $rowArray[4],
+                    'email' => $rowArray[5],
+                    'no_hp' => $rowArray[6],
+                    'gender' => $rowArray[7],
+                    'tgl_lahir' => $rowArray[8],
+                    'instansi' => $rowArray[9],
+                    'alamat' => $rowArray[10]
+                ];
+                $data_peserta[] = $add_data;
+            }
+        }
+
+        for ($i = 0; $i <= count($data_peserta)-1; $i++) {
+            $add = Peserta::create($data_peserta[$i]);
+            if (!$add) {
+                return response()->json(
+                    $this->responses(false, 'gagal menambahkan data peserta ke-'. ($i + 1)),
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            }
+        }
+
+        $del_file = unlink(storage_path('excel/' . $filename));
+        if ($del_file) {
             return response()->json(
                 $this->responses(true, 'berhasil import data peserta'),
                 Response::HTTP_OK
             );
-        } catch (\Throwable $th) {
+        } else {
             return response()->json(
-                $this->responses(false, 'gagal upload data peserta'),
+                $this->responses(false, 'Gagal Import data'),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -374,5 +403,20 @@ class PesertaController extends Controller
         $get_date = date('dmY');
         $kode_soal = $get_test->kode . '-' . $get_date;
         return $kode_soal;
+    }
+
+    protected function convert_kelas($role_kelas)
+    {
+        $kelas = '';
+        switch ($role_kelas) {
+            case 'reguler':
+                $kelas = 'reguler';
+                break;
+            case 'koordinator':
+                $kelas = 'reguler';
+                break;
+        }
+        $res = JenisKelas::select('id')->where('nama_kelas', $kelas)->get();
+        return $res[0]["id"];
     }
 }

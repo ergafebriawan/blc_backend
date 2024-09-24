@@ -64,17 +64,17 @@ $router->group([
     $router->post('/', 'PesertaController@create');
     $router->get('/{id}', 'PesertaController@detail');
     $router->put('/{id}', 'PesertaController@update');
-    $router->post('/active/{id_peserta}', 'PesertaController@active_test');
     $router->delete('/{id}', 'PesertaController@delete');
+    $router->post('/active/{id_peserta}', 'PesertaController@active_test');
+    $router->post('/active/more/peserta', 'PesertaController@more_active');
     $router->get('/by-test/{id_test}', 'PesertaController@show_by_test');
     $router->get('/by-hasil/{id_test}', 'PesertaController@show_by_hasil');
     $router->post('/upload_photo/{id_peserta}', 'MediaController@upload_photo');
+    $router->post('/upload/import_peserta', 'PesertaController@import_peserta');
+    $router->get('/download/template_peserta', 'PesertaController@download_template');
     $router->get('/filter/{params}', 'PesertaController@filter');
     $router->get('/generate_kode/{id_peserta}/{id_test}', 'PesertaController@generate_kode');
     $router->delete('/test/{id}', 'HasilTestController@cancel');
-    $router->post('/import-peserta', 'PesertaController@import_peserta');
-    $router->get('/download-template-import-peserta', 'PesertaController@download_template');
-    $router->post('/more-active', 'PesertaController@more_active');
 });
 
 //test

@@ -52,13 +52,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/peserta/e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6",
+							"raw": "{{baseURL}}/peserta/9fc58446-d704-4cbe-b8cd-aec427b70986",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"peserta",
-								"e1ffddbe-4fae-4785-a3ae-f4e0d49e6fa6"
+								"9fc58446-d704-4cbe-b8cd-aec427b70986"
 							]
 						}
 					},
@@ -355,13 +355,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/peserta/more-active",
+							"raw": "{{baseURL}}/peserta/active/more/peserta",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"peserta",
-								"more-active"
+								"active",
+								"more",
+								"peserta"
 							]
 						}
 					},
@@ -383,13 +385,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/peserta/download-template-import-peserta",
+							"raw": "{{baseURL}}/peserta/download/template_peserta",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"peserta",
-								"download-template-import-peserta"
+								"download",
+								"template_peserta"
 							]
 						}
 					},
@@ -421,13 +424,14 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseURL}}/peserta/import-peserta",
+							"raw": "{{baseURL}}/peserta/upload/import_peserta",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"peserta",
-								"import-peserta"
+								"upload",
+								"import_peserta"
 							]
 						}
 					},
