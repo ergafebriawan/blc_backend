@@ -40,9 +40,27 @@ class PesertaController extends Controller
                 'peserta.active_test'
             )
             ->get();
+        $data_peserta = [];
+        foreach ($peserta as $p) {
+            $data_peserta[] = [
+                'id_peserta'        => $p->id_peserta,
+                'no_reg'            => $p->no_reg,
+                'kelas'             => $p->kelas,
+                'role'              => $p->role,
+                'nama_peserta'      => $p->nama_peserta,
+                'email'             => $p->email,
+                'no_hp'             => $p->no_hp,
+                'gender'            => $p->gender,
+                'tgl_lahir'         => $p->tgl_lahir,
+                'instansi'          => $p->instansi,
+                'alamat'            => $p->alamat,
+                'profile_picture'   => $p->profile_picture,
+                'active_test'       => json_decode($p->active_test)
+            ];
+        }
         if (empty($peserta) == false) {
             return response()->json(
-                $this->responses(true, 'get semua data peserta', $peserta),
+                $this->responses(true, 'menampilkan semua data peserta', $data_peserta),
                 Response::HTTP_OK
             );
         } else {
@@ -72,11 +90,25 @@ class PesertaController extends Controller
                 'peserta.alamat',
                 'peserta.profile_picture',
                 'peserta.active_test'
-            )
-            ->get();
-        if (count($detail_peserta) > 0) {
+            )->first();
+            
+        if ($detail_peserta) {
+            $data_peserta = [
+                'id_peserta'    => $detail_peserta->id_peserta,
+                'no_reg'        => $detail_peserta->no_reg,
+                'kelas'         => $detail_peserta->kelas,
+                'role'          => $detail_peserta->role,
+                'nama_peserta'  => $detail_peserta->nama_peserta,
+                'email'         => $detail_peserta->email,
+                'no_hp'         => $detail_peserta->no_hp,
+                'gender'        => $detail_peserta->gender,
+                'tgl_lahir'     => $detail_peserta->tgl_lahir,
+                'instansi'      => $detail_peserta->instansi,
+                'alamat'        => $detail_peserta->alamat,
+                'active_test'   => json_decode($detail_peserta->active_test)
+            ];
             return response()->json(
-                $this->responses(true, 'get detail data peserta id = ' . $id, $detail_peserta[0]),
+                $this->responses(true, 'ambil detail data peserta id = ' . $id, $data_peserta),
                 Response::HTTP_OK
             );
         } else {
@@ -89,17 +121,23 @@ class PesertaController extends Controller
 
     public function create(Request $request): JsonResponse
     {
+        $test = Test::select('jenis_test')->get();
+        $data_test = [];
+        foreach ($test as $t) {
+            $data_test[$t->jenis_test] = false;
+        }
         $data = [
-            "no_reg" => $request->input("no_reg"),
-            "role_kelas" => $request->input("role_kelas"),
+            "no_reg"        => $request->input("no_reg"),
+            "role_kelas"    => $request->input("role_kelas"),
             "jenis_peserta" => $request->input("jenis_peserta"),
-            "nama_peserta" => $request->input("nama_peserta"),
-            "email" => $request->input("email"),
-            "no_hp" => $request->input("no_hp"),
-            "gender" => $request->input("gender"),
-            "tgl_lahir" => $request->input("tgl_lahir"),
-            "instansi" => $request->input("instansi"),
-            "alamat" => $request->input("alamat")
+            "nama_peserta"  => $request->input("nama_peserta"),
+            "email"         => $request->input("email"),
+            "no_hp"         => $request->input("no_hp"),
+            "gender"        => $request->input("gender"),
+            "tgl_lahir"     => $request->input("tgl_lahir"),
+            "instansi"      => $request->input("instansi"),
+            "alamat"        => $request->input("alamat"),
+            "active_test"   => json_encode($data_test)
         ];
 
         $data_valid = Peserta::where('no_reg', $request->input("no_reg"))->get();
@@ -120,16 +158,16 @@ class PesertaController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $data = [
-            "no_reg" => $request->input("no_reg"),
-            "role_kelas" => $request->input("role_kelas"),
+            "no_reg"        => $request->input("no_reg"),
+            "role_kelas"    => $request->input("role_kelas"),
             "jenis_peserta" => $request->input("jenis_peserta"),
-            "nama_peserta" => $request->input("nama_peserta"),
-            "email" => $request->input("email"),
-            "no_hp" => $request->input("no_hp"),
-            "gender" => $request->input("gender"),
-            "tgl_lahir" => $request->input("tgl_lahir"),
-            "instansi" => $request->input("instansi"),
-            "alamat" => $request->input("alamat")
+            "nama_peserta"  => $request->input("nama_peserta"),
+            "email"         => $request->input("email"),
+            "no_hp"         => $request->input("no_hp"),
+            "gender"        => $request->input("gender"),
+            "tgl_lahir"     => $request->input("tgl_lahir"),
+            "instansi"      => $request->input("instansi"),
+            "alamat"        => $request->input("alamat")
         ];
 
         $peserta_update = Peserta::where("id", $id)->update($data);
@@ -221,7 +259,7 @@ class PesertaController extends Controller
             $add = Peserta::create($data_peserta[$i]);
             if (!$add) {
                 return response()->json(
-                    $this->responses(false, 'gagal menambahkan data peserta ke-'. ($i + 1)),
+                    $this->responses(false, 'gagal menambahkan data peserta ke-' . ($i + 1)),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
@@ -265,18 +303,18 @@ class PesertaController extends Controller
                 HasilSoal::create($data);
             }
             return response()->json(
-                $this->responses(true, "berhasil menambahkan aktivasi test", $peserta[0]),
+                $this->responses(true, "berhasil menambahkan aktivasi test"),
                 Response::HTTP_CREATED
             );
         } catch (\Throwable $th) {
             return response()->json(
-                $this->responses(false, 'gagal menambahkan activasi test'),
+                $this->responses(false, 'gagal menambahkan aktivasi test'),
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
 
-    public function filter($params): JsonResponse
+    public function filter(Request $request): JsonResponse
     {
 
         return response()->json();
@@ -292,19 +330,31 @@ class PesertaController extends Controller
         $test = $request->input("id_test");
         $kode_soal = $this->get_code($test);
 
+        $nama_test = Test::select('jenis_test')->where('id', $test)->first();
+
         $data = [
             "id_peserta" => $id_peserta,
             "id_test" => $test,
             "kode_soal" => $kode_soal,
             "tgl_daftar" => date('Y-m-d')
         ];
-        $create = HasilSoal::create($data);
-        if ($create) {
+
+        // return response()->json(
+        //     $this->responses(true, 'berhasil menambahkan activasi test', $data),
+        //     Response::HTTP_CREATED
+        // );
+
+        try {
+            HasilSoal::create($data);
+            Peserta::where("id", $id_peserta)->update([
+                "active_test" => [$nama_test => true]
+            ]);
+
             return response()->json(
                 $this->responses(true, 'berhasil menambahkan activasi test', $data),
                 Response::HTTP_CREATED
             );
-        } else {
+        } catch (\Throwable $th) {
             return response()->json(
                 $this->responses(false, 'gagal menambahkan activasi test'),
                 Response::HTTP_INTERNAL_SERVER_ERROR

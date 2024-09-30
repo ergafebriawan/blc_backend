@@ -38,6 +38,7 @@ class Peserta extends Model
         'gender',
         'tgl_lahir',
         'instansi',
-        'alamat'
+        'alamat',
+        'active_test'
     ];
 }
