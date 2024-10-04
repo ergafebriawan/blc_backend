@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Peserta;
 use App\Models\JenisKelas;
 use App\Models\RolePeserta;
+use App\Models\Test;
 use Illuminate\Database\Seeder;
 
 class PesertaSeeder extends Seeder
@@ -22,6 +23,13 @@ class PesertaSeeder extends Seeder
         $koordinator = RolePeserta::select('id')->where('nama_role', 'koordinator')->first();
         $anggota = RolePeserta::select('id')->where('nama_role', 'anggota')->first();
 
+        $test = Test::select('jenis_test')->get();
+        $data_test = [];
+        foreach ($test as $t) {
+            $data_test[$t->jenis_test] = false;
+        }
+
+
         Peserta::create([
             "no_reg" => "09876543291",
             "role_kelas" => $reguler->id,
@@ -32,7 +40,8 @@ class PesertaSeeder extends Seeder
             "gender" => "perempuan",
             "tgl_lahir" => "1998-03-21",
             "instansi" => "Fakultas Hukum",
-            "alamat" => "Malang"
+            "alamat" => "Malang",
+            "active_test" => json_encode($data_test)
         ]);
 
         Peserta::create([
@@ -45,7 +54,8 @@ class PesertaSeeder extends Seeder
             "gender" => "perempuan",
             "tgl_lahir" => "1998-05-12",
             "instansi" => "Fakultas Ekonomi",
-            "alamat" => "Surabaya"
+            "alamat" => "Surabaya",
+            "active_test"   => json_encode($data_test)
         ]);
 
         Peserta::create([
@@ -58,7 +68,8 @@ class PesertaSeeder extends Seeder
             "gender" => "laki-laki",
             "tgl_lahir" => "2000-02-10",
             "instansi" => "Fakultas Teknik",
-            "alamat" => "Biltar"
+            "alamat" => "Biltar",
+            "active_test"   => json_encode($data_test)
         ]);
 
         Peserta::create([
@@ -71,7 +82,8 @@ class PesertaSeeder extends Seeder
             "gender" => "laki-laki",
             "tgl_lahir" => "1999-08-14",
             "instansi" => "PNS",
-            "alamat" => "Blitar"
+            "alamat" => "Blitar",
+            "active_test"   => json_encode($data_test)
         ]);
     }
 }

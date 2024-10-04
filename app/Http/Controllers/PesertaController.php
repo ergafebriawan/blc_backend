@@ -214,6 +214,12 @@ class PesertaController extends Controller
         $spreadsheet = $reader->load(storage_path('excel/' . $filename));
         $worksheet = $spreadsheet->getActiveSheet();
 
+        $test = Test::select('jenis_test')->get();
+        $data_test = [];
+        foreach ($test as $t) {
+            $data_test[$t->jenis_test] = false;
+        }
+
         $data_peserta = [];
         foreach ($worksheet->getRowIterator() as $row) {
             $rowArray = [];
@@ -249,7 +255,8 @@ class PesertaController extends Controller
                     'gender' => $rowArray[7],
                     'tgl_lahir' => $rowArray[8],
                     'instansi' => $rowArray[9],
-                    'alamat' => $rowArray[10]
+                    'alamat' => $rowArray[10],
+                    "active_test" => json_encode($data_test)
                 ];
                 $data_peserta[] = $add_data;
             }
@@ -291,9 +298,13 @@ class PesertaController extends Controller
         $id_test = $request->input('id_test');
         $peserta = request()->input('peserta');
         $kode = $this->get_code($id_test);
+        $nama_test = Test::select('jenis_test')->where('id', $id_test)->first();
 
         try {
             for ($i = 0; $i < count($peserta); $i++) {
+                $data_peserta = Peserta::where("id", $peserta[$i])->get();
+                $activeTest = json_decode($data_peserta[0]->active_test);
+                $activeTest->{$nama_test->jenis_test} = true;
                 $data = [
                     "id_peserta" => $peserta[$i],
                     "id_test" => $id_test,
@@ -301,6 +312,9 @@ class PesertaController extends Controller
                     "tgl_daftar" => date('Y-m-d')
                 ];
                 HasilSoal::create($data);
+                Peserta::where('id', $peserta[$i])->update([
+                    'active_test' => json_encode($activeTest)
+                ]);
             }
             return response()->json(
                 $this->responses(true, "berhasil menambahkan aktivasi test"),
@@ -316,7 +330,6 @@ class PesertaController extends Controller
 
     public function filter(Request $request): JsonResponse
     {
-
         return response()->json();
     }
 
@@ -331,6 +344,8 @@ class PesertaController extends Controller
         $kode_soal = $this->get_code($test);
 
         $nama_test = Test::select('jenis_test')->where('id', $test)->first();
+        $activeTest = json_decode($data_peserta[0]->active_test);
+        $activeTest->{$nama_test->jenis_test} = true;
 
         $data = [
             "id_peserta" => $id_peserta,
@@ -340,14 +355,14 @@ class PesertaController extends Controller
         ];
 
         // return response()->json(
-        //     $this->responses(true, 'berhasil menambahkan activasi test', $data),
+        //     $this->responses(true, 'berhasil menambahkan activasi test', $activeTest),
         //     Response::HTTP_CREATED
         // );
 
         try {
             HasilSoal::create($data);
-            Peserta::where("id", $id_peserta)->update([
-                "active_test" => [$nama_test => true]
+            Peserta::where('id', $id_peserta)->update([
+                'active_test' => json_encode($activeTest)
             ]);
 
             return response()->json(

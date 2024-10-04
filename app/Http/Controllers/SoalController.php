@@ -18,7 +18,8 @@ class SoalController extends Controller
             'auth:api', 
             [
                 'except' => [
-                    'get_soal'
+                    'get_soal',
+                    'detail_soal'
                 ]
             ]
         );
