@@ -75,6 +75,7 @@ $router->group([
     $router->get('/filter/{params}', 'PesertaController@filter');
     $router->get('/generate_kode/{id_peserta}/{id_test}', 'PesertaController@generate_kode');
     $router->delete('/test/{id}', 'HasilTestController@cancel');
+    $router->get('/export/{id}/{from}/{to}', 'PesertaController@export_hasil');
 });
 
 //test

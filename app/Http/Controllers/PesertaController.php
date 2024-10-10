@@ -12,12 +12,13 @@ use Illuminate\Http\Response;
 use App\Models\JenisKelas;
 use App\Models\RolePeserta;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class PesertaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['download_template']]);
+        $this->middleware('auth:api', ['except' => ['download_template', 'export_hasil']]);
     }
 
     public function index(): JsonResponse
@@ -91,7 +92,7 @@ class PesertaController extends Controller
                 'peserta.profile_picture',
                 'peserta.active_test'
             )->first();
-            
+
         if ($detail_peserta) {
             $data_peserta = [
                 'id_peserta'    => $detail_peserta->id_peserta,
@@ -121,36 +122,41 @@ class PesertaController extends Controller
 
     public function create(Request $request): JsonResponse
     {
-        $test = Test::select('jenis_test')->get();
-        $data_test = [];
-        foreach ($test as $t) {
-            $data_test[$t->jenis_test] = false;
-        }
-        $data = [
-            "no_reg"        => $request->input("no_reg"),
-            "role_kelas"    => $request->input("role_kelas"),
-            "jenis_peserta" => $request->input("jenis_peserta"),
-            "nama_peserta"  => $request->input("nama_peserta"),
-            "email"         => $request->input("email"),
-            "no_hp"         => $request->input("no_hp"),
-            "gender"        => $request->input("gender"),
-            "tgl_lahir"     => $request->input("tgl_lahir"),
-            "instansi"      => $request->input("instansi"),
-            "alamat"        => $request->input("alamat"),
-            "active_test"   => json_encode($data_test)
-        ];
-
         $data_valid = Peserta::where('no_reg', $request->input("no_reg"))->get();
-        if (count($data_valid) == 0) {
+        if (count($data_valid) > 0) {
+            return response()->json(
+                $this->responses(false, 'peserta sebelumnya sudah terdaftar'),
+                Response::HTTP_CONFLICT
+            );
+        }
+        try {
+            $test = Test::select('jenis_test')->get();
+            $data_test = [];
+            foreach ($test as $t) {
+                $data_test[$t->jenis_test] = false;
+            }
+            $data = [
+                "no_reg"        => $request->input("no_reg"),
+                "role_kelas"    => $request->input("role_kelas"),
+                "jenis_peserta" => $request->input("jenis_peserta"),
+                "nama_peserta"  => $request->input("nama_peserta"),
+                "email"         => $request->input("email"),
+                "no_hp"         => $request->input("no_hp"),
+                "gender"        => $request->input("gender"),
+                "tgl_lahir"     => $request->input("tgl_lahir"),
+                "instansi"      => $request->input("instansi"),
+                "alamat"        => $request->input("alamat"),
+                "active_test"   => json_encode($data_test)
+            ];
             Peserta::create($data);
             return response()->json(
                 $this->responses(true, 'berhasil menambahkan peserta', $data),
                 Response::HTTP_CREATED
             );
-        } else {
+        } catch (\Throwable $th) {
             return response()->json(
-                $this->responses(false, 'peserta sebelumnya sudah terdaftar'),
-                Response::HTTP_CONFLICT
+                $this->responses(false, 'gagal menambahkan peserta'),
+                Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }
@@ -237,10 +243,10 @@ class PesertaController extends Controller
                     $kelas = $role_kelas->id;
                 }
 
-                if ($rowArray[2] == 'reguler') {
+                if ($rowArray[3] == 'koordinator') {
                     $jenis_peserta = RolePeserta::select('id')->where('nama_role', 'koordinator')->first();
                     $peserta = $jenis_peserta->id;
-                } else if ($rowArray[2] == 'private') {
+                } else if ($rowArray[3] == 'anggota') {
                     $jenis_peserta = RolePeserta::select('id')->where('nama_role', 'anggota')->first();
                     $peserta = $jenis_peserta->id;
                 }
@@ -354,11 +360,6 @@ class PesertaController extends Controller
             "tgl_daftar" => date('Y-m-d')
         ];
 
-        // return response()->json(
-        //     $this->responses(true, 'berhasil menambahkan activasi test', $activeTest),
-        //     Response::HTTP_CREATED
-        // );
-
         try {
             HasilSoal::create($data);
             Peserta::where('id', $id_peserta)->update([
@@ -441,6 +442,57 @@ class PesertaController extends Controller
             $res = $this->responses(false, 'empty data');
         }
         return response()->json($res);
+    }
+
+    public function export_hasil(string $id, string $from, string $to)
+    {
+        $data = HasilSoal::select(
+            'peserta.id as id_peserta',
+            'peserta.no_reg as nim',
+            'peserta.nama_peserta as nama_peserta',
+            'test.jenis_test as nama_test',
+            'hasil_test.id as id_test',
+            'hasil_test.tgl_test',
+            'hasil_test.listening',
+            'hasil_test.structure',
+            'hasil_test.reading',
+            'hasil_test.total'
+        )->join('peserta', 'hasil_test.id_peserta', '=', 'peserta.id')
+            ->join('test', 'hasil_test.id_test', '=', 'test.id')
+            ->where('test.id', $id)
+            ->whereBetween('hasil_test.tgl_test', [$from, $to])
+            ->get();
+            // dd($data);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'NIM');
+        $sheet->setCellValue('C1', 'Nama Peserta');
+        $sheet->setCellValue('D1', 'Nama Test');
+        $sheet->setCellValue('E1', 'Tanggal Tes');
+        $sheet->setCellValue('F1', 'Listening');
+        $sheet->setCellValue('G1', 'Structure');
+        $sheet->setCellValue('H1', 'Reading');
+        $sheet->setCellValue('I1', 'Total');
+
+        $row = 2;
+        foreach ($data as $key => $item) {
+            $sheet->setCellValue('A'. $row, $key + 1);
+            $sheet->setCellValue('B'. $row, $item->nim);
+            $sheet->setCellValue('C'. $row, $item->nama_peserta);
+            $sheet->setCellValue('D'. $row, $item->nama_test);
+            $sheet->setCellValue('E'. $row, $item->tgl_test);
+            $sheet->setCellValue('F'. $row, $item->listening);
+            $sheet->setCellValue('G'. $row, $item->structure);
+            $sheet->setCellValue('H'. $row, $item->reading);
+            $sheet->setCellValue('I'. $row, $item->total);
+            $row++;
+        }
+        $filename = 'hasil_test_'. date('dmY'). '.xlsx';
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($filename);
+        return response()->download($filename);
     }
 
     protected function responses($success, $message, $data = null)
